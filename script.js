@@ -774,26 +774,30 @@ function saveGeneratedArticle() {
 
 // ============================================================
 // --- GEMINI AI HELPER ---
-// Wstaw swój klucz API z: https://aistudio.google.com/apikey
 // ============================================================
-const GEMINI_API_KEY = 'AIzaSyA-O0bo_ABXu_q4gYtrSEFFmc8FkgqRSlQ';
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`;
+const GROQ_API_KEY = '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';
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 async function callGemini(prompt) {
-    const response = await fetch(GEMINI_URL, {
+    const response = await fetch(GROQ_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${GROQ_API_KEY}`
+        },
         body: JSON.stringify({
-            contents: [{ parts: [{ text: prompt }] }],
-            generationConfig: { maxOutputTokens: 1200, temperature: 0.8 }
+            model: 'llama-3.1-8b-instant',
+            max_tokens: 1200,
+            temperature: 0.8,
+            messages: [{ role: 'user', content: prompt }]
         })
     });
     if (!response.ok) {
         const err = await response.json();
-        throw new Error(err.error?.message || 'Błąd API Gemini');
+        throw new Error(err.error?.message || 'Błąd API Groq');
     }
     const data = await response.json();
-    return data.candidates[0].content.parts[0].text;
+    return data.choices[0].message.content;
 }
 
 async function generateBlogArticle() {
