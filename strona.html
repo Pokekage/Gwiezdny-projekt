@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gwiezdny Przewodnik – Horoskopy, Tarot i Fazy Księżyca</title>
+    <meta name="description" content="Gwiezdny Przewodnik – codzienne horoskopy dla 12 znaków zodiaku, karta tarota dnia, kalkulator faz księżyca, zgodność znaków i kosmiczny dziennik.">
+    <meta name="keywords" content="horoskop, horoskop dzienny, tarot, fazy księżyca, znaki zodiaku, zgodność znaków, astrologia">
+    <meta name="author" content="Gwiezdny Przewodnik">
+    <meta name="robots" content="index, follow">
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Gwiezdny Przewodnik","url":"https://astropulsepl.netlify.app/","inLanguage":"pl"}</script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Spectral:wght@400;700&display=swap" rel="stylesheet">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6047762879323596" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);"><h1>Gwiezdny Przewodnik</h1></header>
+    <nav class="mystic-nav">
+        <button onclick="showTab('horoscope-tab',this)" class="nav-btn active">✨ Horoskop</button>
+        <button onclick="showTab('recipes-tab',this)" class="nav-btn">🔮 Przepisy</button>
+        <button onclick="showTab('moon-tab',this)" class="nav-btn">🌙 Lunacja</button>
+        <button onclick="showTab('tarot-tab',this)" class="nav-btn">🃏 Tarot</button>
+        <button onclick="showTab('compat-tab',this)" class="nav-btn">💫 Zgodność</button>
+        <button onclick="showTab('journal-tab',this);loadJournal();" class="nav-btn">📖 Dziennik</button>
+        <button onclick="showTab('blog-tab',this);loadBlog();" class="nav-btn">✍️ Wiedza</button>
+        <button onclick="showTab('sennik-tab',this)" class="nav-btn">💤 Sennik</button>
+        <button onclick="showTab('about-tab',this)" class="nav-btn">🌟 O nas</button>
+        <button onclick="showTab('contact-tab',this)" class="nav-btn">✉️ Kontakt</button>
+    </nav>
+    <main>
+    <div style="width:100%;max-width:1100px;margin:10px auto;text-align:center;">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6047762879323596" data-ad-slot="WSTAW_SWOJ_AD_SLOT_ID" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    <section id="horoscope-tab" class="tab-content active">
+        <h1>✨ GWIEZDNY PRZEWODNIK ✨</h1>
+        <div class="zodiac-grid" id="zodiac-grid"></div>
+        <div id="horoscope-display" class="result-panel">
+            <h2 id="selected-sign">Znak</h2>
+            <p id="horoscope-text"></p>
+            <div id="daily-dish-hint" class="hint-box"></div>
+        </div>
+    </section>
+    <section id="recipes-tab" class="tab-content">
+        <h1>🔮 KSIĘGA SMAKÓW 🔮</h1>
+        <div id="recipes-list" class="recipes-grid"></div>
+    </section>
+    <section id="moon-tab" class="tab-content">
+        <h1>🌙 TWOJA FAZA KSIĘŻYCA 🌙</h1>
+        <div class="moon-today-box">
+            <p class="gold-label" style="margin-bottom:12px;">🌍 Aktualna faza księżyca</p>
+            <button class="action-btn" onclick="showTodayMoon()" style="width:100%;">POKAŻ FAZĘ NA DZIŚ</button>
+        </div>
+        <div id="moon-today-result" class="moon-result-panel">
+            <div class="moon-icon-el" style="font-size:4rem;margin-bottom:10px;"></div>
+            <h2 class="moon-name-el" style="font-family:'Cinzel',serif;color:var(--gold);margin-bottom:12px;"></h2>
+            <p class="moon-desc-el" style="line-height:1.8;margin-bottom:15px;"></p>
+            <p class="moon-elixir-el" style="color:var(--gold);font-family:'Cinzel',serif;font-size:0.85rem;margin-bottom:18px;"></p>
+            <div class="moon-cycle-bar-wrap"><div class="moon-cycle-bar-fill"></div></div>
+            <p class="moon-cycle-label" style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:6px;margin-bottom:20px;"></p>
+            <div class="moon-lists">
+                <div class="moon-list-col do-col"><h4>✅ Co robić</h4><ul class="moon-do-list"></ul></div>
+                <div class="moon-list-col avoid-col"><h4>⛔ Czego unikać</h4><ul class="moon-avoid-list"></ul></div>
+            </div>
+        </div>
+        <div class="moon-divider">✦ ✦ ✦</div>
+        <div class="moon-calculator-box">
+            <p class="gold-label">🔮 Twoja faza urodzin</p>
+            <p style="font-size:0.82rem;color:rgba(255,255,255,0.4);font-style:italic;">Podaj datę urodzenia, by poznać fazę księżyca w dniu Twoich narodzin</p>
+            <input type="date" id="birth-date" class="mystic-input">
+            <button class="action-btn" onclick="calculateMoonPhase()">OBLICZ LUNACJĘ URODZIN</button>
+        </div>
+        <div id="moon-result" class="moon-result-panel">
+            <div class="moon-icon-el" style="font-size:4rem;margin-bottom:10px;"></div>
+            <h2 class="moon-name-el" style="font-family:'Cinzel',serif;color:var(--gold);margin-bottom:12px;"></h2>
+            <p class="moon-desc-el" style="line-height:1.8;margin-bottom:15px;"></p>
+            <p class="moon-elixir-el" style="color:var(--gold);font-family:'Cinzel',serif;font-size:0.85rem;margin-bottom:18px;"></p>
+            <div class="moon-cycle-bar-wrap"><div class="moon-cycle-bar-fill"></div></div>
+            <p class="moon-cycle-label" style="font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:6px;margin-bottom:20px;"></p>
+            <div class="moon-lists">
+                <div class="moon-list-col do-col"><h4>✅ Co robić</h4><ul class="moon-do-list"></ul></div>
+                <div class="moon-list-col avoid-col"><h4>⛔ Czego unikać</h4><ul class="moon-avoid-list"></ul></div>
+            </div>
+        </div>
+    </section>
+    <section id="tarot-tab" class="tab-content">
+        <h1>🃏 KARTA TAROTA DNIA 🃏</h1>
+        <p style="color:rgba(255,255,255,0.5);margin-bottom:30px;font-style:italic;">Każdego dnia kosmos kładzie przed Tobą inną kartę.</p>
+        <div id="tarot-card-display" class="tarot-card-wrap">
+            <div class="tarot-card-inner">
+                <div class="tarot-card-front">
+                    <div class="tarot-card-back-pattern">🌟</div>
+                    <p style="color:var(--gold);font-family:'Cinzel',serif;font-size:0.8rem;letter-spacing:0.1em;">GWIEZDNY PRZEWODNIK</p>
+                </div>
+                <div class="tarot-card-back">
+                    <div id="tarot-sym" style="font-size:3.5rem;margin-bottom:10px;"></div>
+                    <div id="tarot-num" style="color:rgba(212,175,55,0.5);font-family:'Cinzel',serif;font-size:0.8rem;margin-bottom:5px;"></div>
+                    <h2 id="tarot-name" style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.4rem;margin-bottom:15px;"></h2>
+                    <p id="tarot-meaning" style="line-height:1.8;font-size:0.95rem;color:rgba(255,255,255,0.9);"></p>
+                    <p id="tarot-shadow" style="margin-top:15px;font-size:0.82rem;color:rgba(255,255,255,0.4);font-style:italic;"></p>
+                </div>
+            </div>
+        </div>
+        <button class="action-btn" onclick="renderTarot()" style="margin-top:25px;">🔄 ODKRYJ KARTĘ DNIA</button>
+    </section>
+    <section id="compat-tab" class="tab-content">
+        <h1>💫 ZGODNOŚĆ ZNAKÓW 💫</h1>
+        <p style="color:rgba(255,255,255,0.5);margin-bottom:30px;font-style:italic;">Sprawdź, co gwiazdy mówią o Waszej relacji.</p>
+        <div class="compat-box">
+            <div class="compat-selects">
+                <div class="compat-select-wrap">
+                    <label class="gold-label" for="compat-sign1">Pierwszy znak</label>
+                    <select id="compat-sign1" class="mystic-input">
+                        <option value="">— wybierz —</option>
+                        <option value="0">♈ Baran</option><option value="1">♉ Byk</option><option value="2">♊ Bliźnięta</option><option value="3">♋ Rak</option><option value="4">♌ Lew</option><option value="5">♍ Panna</option><option value="6">♎ Waga</option><option value="7">♏ Skorpion</option><option value="8">♐ Strzelec</option><option value="9">♑ Koziorożec</option><option value="10">♒ Wodnik</option><option value="11">♓ Ryby</option>
+                    </select>
+                </div>
+                <div class="compat-heart">💞</div>
+                <div class="compat-select-wrap">
+                    <label class="gold-label" for="compat-sign2">Drugi znak</label>
+                    <select id="compat-sign2" class="mystic-input">
+                        <option value="">— wybierz —</option>
+                        <option value="0">♈ Baran</option><option value="1">♉ Byk</option><option value="2">♊ Bliźnięta</option><option value="3">♋ Rak</option><option value="4">♌ Lew</option><option value="5">♍ Panna</option><option value="6">♎ Waga</option><option value="7">♏ Skorpion</option><option value="8">♐ Strzelec</option><option value="9">♑ Koziorożec</option><option value="10">♒ Wodnik</option><option value="11">♓ Ryby</option>
+                    </select>
+                </div>
+            </div>
+            <button class="action-btn" onclick="calculateCompatibility()">OBLICZ ZGODNOŚĆ ✨</button>
+        </div>
+        <div id="compat-result" class="result-panel" style="max-width:500px;">
+            <div id="compat-score" style="font-size:2.8rem;font-family:'Cinzel',serif;color:var(--gold);margin-bottom:15px;"></div>
+            <div class="compat-bar-wrap"><div id="compat-bar-fill" class="compat-bar-fill"></div></div>
+            <p id="compat-comment" style="margin-top:20px;line-height:1.8;font-style:italic;"></p>
+        </div>
+    </section>
+    <section id="journal-tab" class="tab-content">
+        <h1>📖 DZIENNIK KOSMICZNY 📖</h1>
+        <p style="color:rgba(255,255,255,0.5);margin-bottom:25px;font-style:italic;">Twoje myśli zapisane pod opieką gwiazd.</p>
+        <div class="journal-box">
+            <textarea id="journal-input" class="journal-textarea" placeholder="Co dziś czujesz? Co przynoszą Ci gwiazdy?&#10;&#10;Zapisz swoje myśli, marzenia, intencje..."></textarea>
+            <button id="journal-save-btn" class="action-btn" onclick="saveJournalEntry()">ZAPISZ W GWIAZDACH ✨</button>
+        </div>
+        <div id="journal-entries" class="journal-entries-list"></div>
+    </section>
+    <section id="blog-tab" class="tab-content">
+        <h1>✍️ WIEDZA ASTROLOGICZNA ✍️</h1>
+        <p style="color:rgba(255,255,255,0.5);margin-bottom:30px;font-style:italic;text-align:center;">Artykuły, poradniki i odkrycia ze świata astrologii i ezoteryki.</p>
+        <div class="blog-generator-box">
+            <p class="gold-label" style="margin-bottom:12px;text-align:center;">✨ WYGENERUJ NOWY ARTYKUŁ ✨</p>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+                <input type="text" id="blog-topic-input" class="mystic-input" style="max-width:380px;" placeholder="np. Merkury retrograde, Pełnia w Rybach..." />
+                <button class="action-btn" onclick="generateBlogArticle()">GENERUJ ✦</button>
+            </div>
+            <div id="blog-generating" style="display:none;text-align:center;margin-top:20px;color:var(--gold);font-family:'Cinzel',serif;font-size:0.85rem;">✦ &nbsp; Gwiazdy piszą artykuł... &nbsp; ✦</div>
+        </div>
+        <div id="blog-generated-article" style="display:none;" class="blog-article-full">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px;">
+                <span id="generated-article-date" class="blog-meta"></span>
+                <button class="action-btn" style="font-size:0.75rem;padding:8px 16px;" onclick="saveGeneratedArticle()">📌 ZAPISZ ARTYKUŁ</button>
+            </div>
+            <h2 id="generated-article-title" style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.5rem;margin-bottom:20px;"></h2>
+            <div id="generated-article-body" style="color:rgba(255,255,255,0.88);line-height:1.9;font-size:1rem;"></div>
+        </div>
+        <div id="blog-articles-list" class="blog-grid"></div>
+        <div id="blog-modal" style="display:none;position:fixed;z-index:1000;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.92);overflow-y:auto;">
+            <div class="modal-content" style="margin:5% auto;max-width:720px;">
+                <span class="close-modal" onclick="document.getElementById('blog-modal').style.display='none'">&times;</span>
+                <p id="blog-modal-date" class="blog-meta" style="margin-bottom:10px;"></p>
+                <h2 id="blog-modal-title" style="margin-bottom:25px;"></h2>
+                <hr style="border-color:var(--gold);opacity:0.2;margin-bottom:25px;">
+                <div id="blog-modal-body" style="color:rgba(255,255,255,0.88);line-height:1.9;font-size:1rem;"></div>
+            </div>
+        </div>
+    </section>
+    <section id="sennik-tab" class="tab-content">
+        <h1>🌙 SENNIK KOSMICZNY 🌙</h1>
+        <p style="color:rgba(255,255,255,0.5);margin-bottom:30px;font-style:italic;text-align:center;">Odkryj symboliczne znaczenie swoich snów w świetle gwiazd i archetypów.</p>
+        <div class="blog-generator-box">
+            <p class="gold-label" style="margin-bottom:12px;text-align:center;">🔮 CO CI SIĘ ŚNIŁO? 🔮</p>
+            <p style="text-align:center;font-size:0.85rem;color:rgba(255,255,255,0.45);margin-bottom:18px;">Opisz swój sen — osobę, miejsce, emocję, symbol lub wydarzenie.</p>
+            <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+                <textarea id="dream-input" class="journal-textarea" style="max-width:500px;min-height:100px;" placeholder="np. śniły mi się latające konie, byłam w ciemnym lesie, ktoś mi coś dawał..."></textarea>
+                <button class="action-btn" onclick="interpretDream()">INTERPRETUJ SEN ✦</button>
+            </div>
+            <div id="dream-generating" style="display:none;text-align:center;margin-top:20px;color:var(--gold);font-family:'Cinzel',serif;font-size:0.85rem;">✦ &nbsp; Gwiazdy odczytują Twój sen... &nbsp; ✦</div>
+        </div>
+
+        <div id="dream-result" style="display:none;" class="blog-article-full">
+            <div style="text-align:center;margin-bottom:20px;">
+                <div id="dream-symbol" style="font-size:3rem;margin-bottom:10px;"></div>
+                <h2 id="dream-title" style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.3rem;"></h2>
+            </div>
+            <div id="dream-body" style="color:rgba(255,255,255,0.88);line-height:1.9;font-size:1rem;"></div>
+            <div style="margin-top:25px;padding-top:20px;border-top:1px solid rgba(212,175,55,0.2);text-align:center;">
+                <button class="action-btn" style="font-size:0.8rem;padding:10px 20px;" onclick="saveDream()">📌 ZAPISZ INTERPRETACJĘ</button>
+            </div>
+        </div>
+
+        <div id="dream-history" style="width:100%;max-width:720px;margin-top:10px;"></div>
+    </section>
+    <section id="about-tab" class="tab-content">
+        <h1>🌟 O NAS 🌟</h1>
+        <div class="legal-box">
+            <div class="about-hero">
+                <div class="about-symbol">☿</div>
+                <p class="about-lead">Gwiezdny Przewodnik to polska platforma astrologiczna łącząca starożytną mądrość gwiazd z nowoczesnymi narzędziami cyfrowymi.</p>
+            </div>
+            <div class="about-section"><h2>Nasza misja</h2><p>Wierzymy, że astrologia — gdy traktowana jako narzędzie refleksji — może pomóc ludziom lepiej rozumieć siebie, swoje wzorce zachowania i rytm życia. Gwiezdny Przewodnik powstał z pasji do symboliki kosmicznej i pragnienia, by uczynić tę wiedzę dostępną dla każdego.</p></div>
+            <div class="about-section"><h2>Co oferujemy</h2><p>Codzienne horoskopy dla 12 znaków zodiaku, kalkulator faz Księżyca, karty Tarota dnia, kalkulator zgodności, astrologiczną Księgę Przepisów, Kosmiczny Dziennik oraz sekcję edukacyjną z artykułami o astrologii i ezoteryce.</p></div>
+            <div class="about-section"><h2>Nasze podejście</h2><p>Traktujemy astrologię jako język symboli — nie jako naukę ścisłą. Wszystkie treści mają charakter rozrywkowy i edukacyjny. Zachęcamy do krytycznego myślenia i traktowania horoskopów jako inspiracji.</p></div>
+            <div class="about-section"><h2>Technologia</h2><p>Nasze narzędzia opierają się na obliczeniach astronomicznych. Część treści generowana jest przy pomocy sztucznej inteligencji — zawsze w oparciu o rzetelne podstawy astrologiczne.</p></div>
+            <div class="about-contact-cta">
+                <p>Masz pytania lub sugestie?</p>
+                <button class="action-btn" onclick="showTab('contact-tab',null)" style="margin-top:12px;">✉️ NAPISZ DO NAS</button>
+            </div>
+        </div>
+    </section>
+    <section id="contact-tab" class="tab-content">
+        <h1>✉️ KONTAKT ✉️</h1>
+        <div class="legal-box">
+            <p style="color:rgba(255,255,255,0.6);text-align:center;margin-bottom:30px;font-style:italic;">Masz pytanie lub chcesz nawiązać współpracę? Odezwij się.</p>
+            <div class="contact-grid">
+                <div class="contact-card"><div class="contact-icon">📧</div><h3>E-mail</h3><p>kontakt@gwiezdnyprzewodnik.pl</p><p class="contact-note">Odpowiadamy w ciągu 2-3 dni.</p></div>
+                <div class="contact-card"><div class="contact-icon">🌐</div><h3>Social Media</h3><p>Instagram i Facebook: <strong>@GwiezdnyPrzewodnik</strong></p><p class="contact-note">Codzienne horoskopy i inspiracje.</p></div>
+                <div class="contact-card"><div class="contact-icon">💼</div><h3>Współpraca</h3><p>Jesteś astrologiem lub twórcą treści ezoterycznych?</p><p class="contact-note">Napisz — chętnie porozmawiamy.</p></div>
+            </div>
+            <div class="contact-form-box">
+                <h2 style="font-family:'Cinzel',serif;color:var(--gold);margin-bottom:20px;font-size:1.1rem;">WYŚLIJ WIADOMOŚĆ</h2>
+                <div style="display:flex;flex-direction:column;gap:14px;">
+                    <input type="text" id="contact-name" class="mystic-input" placeholder="Twoje imię" style="text-align:left;padding-left:18px;" />
+                    <input type="email" id="contact-email" class="mystic-input" placeholder="Adres e-mail" style="text-align:left;padding-left:18px;" />
+                    <textarea id="contact-message" class="journal-textarea" placeholder="Treść wiadomości..." style="min-height:130px;"></textarea>
+                    <button class="action-btn" onclick="sendContactForm()" style="align-self:flex-start;">WYŚLIJ ✦</button>
+                    <div id="contact-confirmation" style="display:none;color:#7fc47f;font-family:'Cinzel',serif;font-size:0.85rem;">✓ Wiadomość wysłana! Odpiszemy wkrótce.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="privacy-tab" class="tab-content">
+        <h1>🔒 POLITYKA PRYWATNOŚCI 🔒</h1>
+        <div class="legal-box">
+            <p class="legal-date">Ostatnia aktualizacja: 1 czerwca 2025</p>
+            <div class="legal-section"><h2>1. Administrator danych</h2><p>Administratorem danych osobowych jest właściciel serwisu Gwiezdny Przewodnik (<strong>astropulsepl.netlify.app</strong>). Kontakt: kontakt@gwiezdnyprzewodnik.pl</p></div>
+            <div class="legal-section"><h2>2. Jakie dane zbieramy</h2><ul class="legal-list"><li><strong>Dane dobrowolne</strong> — imię i e-mail w formularzu kontaktowym.</li><li><strong>Dane techniczne</strong> — adres IP, typ przeglądarki, czas wizyty — zbierane automatycznie przez serwery hostingowe.</li><li><strong>localStorage</strong> — wpisy Dziennika przechowywane wyłącznie lokalnie w przeglądarce.</li></ul></div>
+            <div class="legal-section"><h2>3. Cel przetwarzania</h2><ul class="legal-list"><li>Odpowiedź na zapytania z formularza.</li><li>Statystyki odwiedzin (Google Analytics).</li><li>Wyświetlanie reklam (Google AdSense).</li></ul></div>
+            <div class="legal-section"><h2>4. Google AdSense i cookies</h2><p>Serwis używa Google AdSense, która korzysta z plików cookies do personalizacji reklam. Możesz zrezygnować na <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener" style="color:var(--gold);">google.com/settings/ads</a>. Szczegóły: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:var(--gold);">Polityka Prywatności Google</a>.</p></div>
+            <div class="legal-section"><h2>5. Podstawa prawna (RODO)</h2><p>Art. 6 ust. 1 lit. a) RODO (zgoda) oraz lit. f) RODO (prawnie uzasadniony interes).</p></div>
+            <div class="legal-section"><h2>6. Twoje prawa</h2><ul class="legal-list"><li>Prawo dostępu, sprostowania i usunięcia danych.</li><li>Prawo do ograniczenia przetwarzania i przenoszenia danych.</li><li>Prawo do skargi do UODO.</li></ul><p style="margin-top:12px;">Kontakt: kontakt@gwiezdnyprzewodnik.pl</p></div>
+            <div class="legal-section"><h2>7. Podmioty trzecie</h2><p>Dane mogą trafiać do Google LLC (AdSense/Analytics) i Netlify Inc. (hosting) — zgodnie z RODO.</p></div>
+        </div>
+    </section>
+    </main>
+    <footer style="width:100%;text-align:center;padding:30px 20px;color:rgba(255,255,255,0.25);font-size:0.78rem;font-family:'Cinzel',serif;letter-spacing:0.06em;border-top:1px solid rgba(212,175,55,0.1);margin-top:40px;">
+        <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;">
+            <button onclick="showTab('about-tab',null)" style="background:none;border:none;color:rgba(212,175,55,0.5);cursor:pointer;font-family:'Cinzel',serif;font-size:0.75rem;">O nas</button>
+            <button onclick="showTab('contact-tab',null)" style="background:none;border:none;color:rgba(212,175,55,0.5);cursor:pointer;font-family:'Cinzel',serif;font-size:0.75rem;">Kontakt</button>
+            <button onclick="showTab('privacy-tab',null)" style="background:none;border:none;color:rgba(212,175,55,0.5);cursor:pointer;font-family:'Cinzel',serif;font-size:0.75rem;">Polityka Prywatności</button>
+        </div>
+        <p>© 2025 Gwiezdny Przewodnik &nbsp;·&nbsp; Horoskopy &nbsp;·&nbsp; Tarot &nbsp;·&nbsp; Fazy Księżyca &nbsp;·&nbsp; Astrologia</p>
+        <p style="margin-top:8px;font-size:0.7rem;opacity:0.5;">Treści mają charakter rozrywkowy i nie zastępują profesjonalnej porady.</p>
+    </footer>
+    <div id="recipe-modal" class="modal" role="dialog" aria-modal="true">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title"></h2>
+            <hr style="border-color:var(--gold);opacity:0.25;margin-bottom:20px;">
+            <div id="modal-body"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

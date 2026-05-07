@@ -1,0 +1,989 @@
+/* ============================================================
+   GWIEZDNY PRZEWODNIK — style.css (wersja oczyszczona)
+   ============================================================ */
+
+:root {
+    --gold: #d4af37;
+    --gold-dim: rgba(212, 175, 55, 0.3);
+    --dark-bg: rgba(8, 10, 20, 0.92);
+    --card-bg: rgba(15, 15, 28, 0.9);
+}
+
+/* --- RESET & BASE --- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Spectral', serif;
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.82)),
+        url('image_1790ba.jpg') center center / cover no-repeat;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+h1 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    text-align: center;
+    letter-spacing: 0.08em;
+    margin-bottom: 30px;
+    text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+}
+
+/* --- ANIMACJE --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes starTwinkle {
+    from { opacity: 0.1; transform: scale(0.8); }
+    to   { opacity: 0.9; transform: scale(1.2); }
+}
+
+@keyframes pulse-gold {
+    0%, 100% { box-shadow: 0 0 10px var(--gold-dim); }
+    50%       { box-shadow: 0 0 25px rgba(212, 175, 55, 0.6); }
+}
+
+@keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position: 200% center; }
+}
+
+/* --- NAWIGACJA --- */
+.mystic-nav {
+    margin: 35px 0 10px;
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-btn {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 12px 24px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: rgba(212, 175, 55, 0.15);
+    box-shadow: 0 0 15px var(--gold-dim);
+}
+
+.nav-btn.active {
+    background: var(--gold);
+    color: #000;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+    font-weight: bold;
+}
+
+/* --- SEKCJE --- */
+.tab-content {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 92%;
+    max-width: 1100px;
+    padding: 10px 0 60px;
+    z-index: 1;
+}
+
+.tab-content.active {
+    display: flex;
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+/* --- ZODIAK --- */
+.zodiac-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.sign-card {
+    background: var(--card-bg);
+    border: 1px solid var(--gold-dim);
+    padding: 18px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+}
+
+.sign-card:hover {
+    border-color: var(--gold);
+    background: rgba(212, 175, 55, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
+}
+
+.sign-symbol {
+    font-size: 2rem;
+    display: block;
+    color: var(--gold);
+    margin-bottom: 8px;
+}
+
+/* --- PANEL WYNIKU (horoskop + lunacja) --- */
+.result-panel {
+    display: none;
+    margin-top: 25px;
+    background: var(--card-bg);
+    border: 1px solid var(--gold);
+    padding: 30px;
+    width: 100%;
+    max-width: 550px;
+    text-align: center;
+    border-radius: 4px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+}
+
+.result-panel h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+}
+
+.result-panel p {
+    line-height: 1.8;
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Pudełko z codzienną sugestią przepisu */
+.hint-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(212, 175, 55, 0.07);
+    border: 1px dashed var(--gold-dim);
+    border-radius: 4px;
+}
+
+/* --- PRZEPISY --- */
+.recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.recipe-card {
+    background: var(--card-bg);
+    border: 1px solid var(--gold-dim);
+    padding: 22px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease both;
+}
+
+.recipe-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--gold);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+}
+
+.recipe-card h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.recipe-card p {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+.recipe-card.daily-highlight {
+    grid-column: span 3;
+    background: rgba(212, 175, 55, 0.08);
+    border: 2px solid var(--gold);
+}
+
+.recipe-card.daily-highlight h3 {
+    font-size: 1.3rem;
+}
+
+.daily-badge {
+    display: block;
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+    /* Efekt połysku na tekście */
+    background: linear-gradient(90deg, var(--gold) 25%, #fff8dc 50%, var(--gold) 75%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shimmer 3s linear infinite;
+}
+
+/* --- KALKULATOR LUNACJI --- */
+/* --- KALKULATOR LUNACJI --- */
+.moon-today-box {
+    background: var(--card-bg);
+    border: 1px solid var(--gold);
+    padding: 25px 35px;
+    border-radius: 8px;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: 10px;
+}
+
+.moon-calculator-box {
+    background: var(--card-bg);
+    border: 1px solid rgba(212,175,55,0.4);
+    padding: 30px 35px;
+    border-radius: 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 500px;
+}
+
+.moon-divider {
+    color: var(--gold-dim);
+    font-size: 1rem;
+    letter-spacing: 0.5em;
+    margin: 30px 0 20px;
+    opacity: 0.5;
+}
+
+.moon-result-panel {
+    display: none;
+    margin-top: 15px;
+    background: var(--card-bg);
+    border: 1px solid var(--gold);
+    padding: 30px 35px;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+    border-radius: 8px;
+    box-sizing: border-box;
+    word-break: break-word;
+    overflow-wrap: break-word;
+}
+
+.moon-cycle-bar-wrap {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.07);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.moon-cycle-bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #3a2a80, var(--gold));
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.moon-lists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.moon-list-col h4 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.do-col h4 { color: #7fc47f; }
+.avoid-col h4 { color: #c47f7f; }
+
+.moon-do-list, .moon-avoid-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.moon-do-list li, .moon-avoid-list li {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: rgba(255,255,255,0.75);
+}
+
+.moon-do-list li { color: rgba(180,230,180,0.85); }
+.moon-avoid-list li { color: rgba(230,180,180,0.85); }
+
+@media (max-width: 500px) {
+    .moon-lists { grid-template-columns: 1fr; }
+    .moon-result-panel, .moon-calculator-box, .moon-today-box { padding: 22px 18px; }
+}
+
+.gold-label {
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+}
+
+.mystic-input {
+    background: #111118;
+    color: #ffffff;
+    border: 1px solid var(--gold);
+    padding: 14px;
+    font-family: 'Spectral', serif;
+    font-size: 1.1rem;
+    text-align: center;
+    width: 100%;
+    outline: none;
+    transition: box-shadow 0.3s;
+}
+
+.mystic-input:focus {
+    box-shadow: 0 0 15px var(--gold-dim);
+}
+
+.mystic-input::-webkit-datetime-edit-text,
+.mystic-input::-webkit-datetime-edit-month-field,
+.mystic-input::-webkit-datetime-edit-day-field,
+.mystic-input::-webkit-datetime-edit-year-field {
+    color: #ffffff;
+}
+
+.mystic-input::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    cursor: pointer;
+    padding: 5px;
+}
+
+/* --- PRZYCISKI --- */
+.action-btn {
+    background: var(--gold);
+    color: #000;
+    border: none;
+    padding: 14px 20px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    font-weight: bold;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    background: #f0cc55;
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+    transform: translateY(-2px);
+}
+
+/* --- MODAL (PRZEPIS SZCZEGÓŁOWY) --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(4px);
+}
+
+.modal-content {
+    background: #0b0d17;
+    margin: 8% auto;
+    padding: 45px;
+    border: 2px solid var(--gold);
+    width: 85%;
+    max-width: 600px;
+    border-radius: 10px;
+    position: relative;
+    line-height: 1.75;
+    animation: fadeInUp 0.35s ease forwards;
+    box-shadow: 0 0 50px rgba(212, 175, 55, 0.15);
+}
+
+.modal-content h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+.modal-content #modal-body {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 1rem;
+}
+
+.close-modal {
+    position: absolute;
+    right: 18px; top: 8px;
+    color: var(--gold);
+    font-size: 32px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    line-height: 1;
+}
+
+.close-modal:hover { transform: scale(1.2); }
+
+
+/* ============================================================
+   TAROT
+   ============================================================ */
+@keyframes cardFlip {
+    0%   { transform: rotateY(0deg); }
+    50%  { transform: rotateY(90deg); }
+    100% { transform: rotateY(0deg); }
+}
+
+.tarot-card-wrap {
+    width: 280px;
+    height: 420px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.tarot-card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tarot-card-wrap.flipped .tarot-card-inner {
+    transform: rotateY(180deg);
+}
+
+.tarot-card-front,
+.tarot-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border: 2px solid var(--gold);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 25px;
+    box-sizing: border-box;
+}
+
+.tarot-card-front {
+    background: radial-gradient(ellipse at center, #1a1040 0%, #0b0d17 100%);
+    gap: 10px;
+}
+
+.tarot-card-back-pattern {
+    font-size: 5rem;
+    opacity: 0.15;
+    margin-bottom: 15px;
+}
+
+.tarot-card-back {
+    background: radial-gradient(ellipse at center, #150f30 0%, #0b0d17 100%);
+    transform: rotateY(180deg);
+    text-align: center;
+    gap: 0;
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.15);
+}
+
+/* ============================================================
+   ZGODNOŚĆ
+   ============================================================ */
+.compat-box {
+    background: var(--card-bg);
+    border: 1px solid var(--gold);
+    padding: 35px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 560px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+}
+
+.compat-selects {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+.compat-select-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.compat-heart {
+    font-size: 2rem;
+    padding-bottom: 8px;
+    flex-shrink: 0;
+}
+
+select.mystic-input {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23d4af37' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 35px;
+}
+
+select.mystic-input option {
+    background: #111118;
+    color: white;
+}
+
+.compat-bar-wrap {
+    width: 100%;
+    height: 12px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+.compat-bar-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 6px;
+    transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    background: linear-gradient(90deg, var(--gold), #fff07a);
+}
+
+@media (max-width: 500px) {
+    .compat-selects { flex-direction: column; align-items: stretch; }
+    .compat-heart { text-align: center; padding: 0; }
+}
+
+/* ============================================================
+   DZIENNIK KOSMICZNY
+   ============================================================ */
+.journal-box {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.journal-textarea {
+    width: 100%;
+    min-height: 160px;
+    background: #0d0f1c;
+    color: white;
+    border: 1px solid var(--gold-dim);
+    padding: 18px;
+    font-family: 'Spectral', serif;
+    font-size: 1rem;
+    line-height: 1.8;
+    resize: vertical;
+    outline: none;
+    border-radius: 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-sizing: border-box;
+}
+
+.journal-textarea:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 15px var(--gold-dim);
+}
+
+.journal-textarea::placeholder {
+    color: rgba(255,255,255,0.2);
+    font-style: italic;
+}
+
+.journal-entries-list {
+    width: 100%;
+    max-width: 680px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+    padding-bottom: 40px;
+}
+
+.journal-entry {
+    background: var(--card-bg);
+    border: 1px solid var(--gold-dim);
+    border-radius: 6px;
+    padding: 20px 22px;
+    transition: border-color 0.3s;
+}
+
+.journal-entry:hover { border-color: rgba(212,175,55,0.5); }
+
+.journal-entry-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.journal-moon { font-size: 1.2rem; flex-shrink: 0; }
+
+.journal-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    color: rgba(212,175,55,0.6);
+    letter-spacing: 0.05em;
+    flex: 1;
+}
+
+.journal-delete {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.3);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.journal-delete:hover {
+    border-color: #c87a7a;
+    color: #c87a7a;
+    background: rgba(200,122,122,0.1);
+}
+
+.journal-text {
+    color: rgba(255,255,255,0.82);
+    line-height: 1.8;
+    font-size: 0.95rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+@media (max-width: 900px) {
+    .recipes-grid { grid-template-columns: repeat(2, 1fr); }
+    .recipe-card.daily-highlight { grid-column: span 2; }
+    .zodiac-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 600px) {
+    .recipes-grid { grid-template-columns: 1fr; }
+    .recipe-card.daily-highlight { grid-column: span 1; }
+    .zodiac-grid { grid-template-columns: repeat(3, 1fr); }
+    .modal-content { margin: 15% auto; padding: 28px; width: 92%; }
+    h1 { font-size: 1.3rem; }
+    .nav-btn { padding: 10px 14px; font-size: 0.75rem; }
+}
+
+/* ============================================================
+   BLOG / WIEDZA ASTROLOGICZNA
+   ============================================================ */
+.blog-generator-box {
+    background: var(--card-bg);
+    border: 1px solid var(--gold);
+    padding: 28px 30px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 720px;
+    margin-bottom: 35px;
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 10px;
+}
+
+.blog-card {
+    background: var(--card-bg);
+    border: 1px solid var(--gold-dim);
+    border-radius: 8px;
+    padding: 28px 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.5s ease both;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.blog-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(212,175,55,0.2);
+}
+
+.blog-card-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    text-transform: uppercase;
+    opacity: 0.7;
+}
+
+.blog-card h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 1.05rem;
+    line-height: 1.4;
+}
+
+.blog-card p {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.62);
+    line-height: 1.65;
+    flex: 1;
+}
+
+.blog-meta {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    color: rgba(212,175,55,0.55);
+    letter-spacing: 0.06em;
+}
+
+.blog-read-more {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    margin-top: 4px;
+    opacity: 0.8;
+}
+
+.blog-article-full {
+    background: var(--card-bg);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 35px 40px;
+    width: 100%;
+    max-width: 720px;
+    margin-bottom: 30px;
+    animation: fadeInUp 0.5s ease forwards;
+}
+
+.blog-card.ai-generated {
+    border-color: rgba(212,175,55,0.6);
+    background: rgba(212,175,55,0.04);
+}
+
+@media (max-width: 700px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .blog-article-full { padding: 24px 20px; }
+}
+
+/* ============================================================
+   O NAS / KONTAKT / POLITYKA PRYWATNOŚCI
+   ============================================================ */
+.legal-box {
+    width: 100%;
+    max-width: 760px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding-bottom: 40px;
+}
+
+.legal-date {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    color: rgba(212,175,55,0.45);
+    letter-spacing: 0.06em;
+    margin-bottom: 28px;
+    text-align: center;
+}
+
+.legal-section {
+    border-top: 1px solid rgba(212,175,55,0.1);
+    padding: 24px 0;
+}
+
+.legal-section h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 14px;
+}
+
+.legal-section p {
+    color: rgba(255,255,255,0.72);
+    line-height: 1.85;
+    font-size: 0.92rem;
+}
+
+.legal-list {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.legal-list li {
+    color: rgba(255,255,255,0.72);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    padding-left: 18px;
+    position: relative;
+}
+
+.legal-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-size: 0.6rem;
+    top: 5px;
+    opacity: 0.6;
+}
+
+/* O NAS */
+.about-hero {
+    text-align: center;
+    padding: 30px 0 35px;
+    border-bottom: 1px solid rgba(212,175,55,0.12);
+    margin-bottom: 5px;
+}
+
+.about-symbol {
+    font-size: 4rem;
+    color: var(--gold);
+    opacity: 0.6;
+    margin-bottom: 18px;
+    font-family: serif;
+}
+
+.about-lead {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.8);
+    max-width: 560px;
+    margin: 0 auto;
+    font-style: italic;
+}
+
+.about-section {
+    border-top: 1px solid rgba(212,175,55,0.1);
+    padding: 24px 0;
+}
+
+.about-section h2 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+}
+
+.about-section p {
+    color: rgba(255,255,255,0.72);
+    line-height: 1.85;
+    font-size: 0.92rem;
+}
+
+.about-contact-cta {
+    text-align: center;
+    padding: 30px 0 10px;
+    border-top: 1px solid rgba(212,175,55,0.1);
+    color: rgba(255,255,255,0.5);
+    font-style: italic;
+}
+
+/* KONTAKT */
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 35px;
+}
+
+.contact-card {
+    background: var(--card-bg);
+    border: 1px solid var(--gold-dim);
+    border-radius: 8px;
+    padding: 24px 18px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: border-color 0.3s;
+}
+
+.contact-card:hover { border-color: var(--gold); }
+
+.contact-icon { font-size: 2rem; }
+
+.contact-card h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+}
+
+.contact-card p {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.85rem;
+    line-height: 1.6;
+}
+
+.contact-note {
+    font-size: 0.75rem !important;
+    color: rgba(255,255,255,0.35) !important;
+    font-style: italic;
+}
+
+.contact-form-box {
+    background: var(--card-bg);
+    border: 1px solid var(--gold-dim);
+    border-radius: 8px;
+    padding: 28px 28px;
+}
+
+@media (max-width: 680px) {
+    .contact-grid { grid-template-columns: 1fr; }
+}
