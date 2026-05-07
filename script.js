@@ -786,7 +786,7 @@ async function callGemini(prompt) {
             'Authorization': `Bearer ${GROQ_API_KEY}`
         },
         body: JSON.stringify({
-            model: 'llama-3.1-8b-instant',
+            model: 'llama-3.3-70b-versatile',
             max_tokens: 1200,
             temperature: 0.8,
             messages: [{ role: 'user', content: prompt }]
