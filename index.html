@@ -286,23 +286,58 @@
         </div>
     </section>
     <section id="contact-tab" class="tab-content">
-        <h1>✉️ KONTAKT ✉️</h1>
+        <h1>✨ ZNAJDŹ NAS ✨</h1>
         <div class="legal-box">
-            <p style="color:rgba(255,255,255,0.6);text-align:center;margin-bottom:30px;font-style:italic;">Masz pytanie lub chcesz nawiązać współpracę? Odezwij się.</p>
-            <div class="contact-grid">
-                <div class="contact-card"><div class="contact-icon">📧</div><h3>E-mail</h3><p>kontakt@gwiezdnyprzewodnik.pl</p><p class="contact-note">Odpowiadamy w ciągu 2-3 dni.</p></div>
-                <div class="contact-card"><div class="contact-icon">🌐</div><h3>Social Media</h3><p><a href="https://www.instagram.com/gwiezdnyprzewodnik/" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;">📸 Instagram</a> &nbsp;·&nbsp; <a href="https://www.tiktok.com/@gwiezdnyprzewodnikpl?lang=pl-PL" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;">🎵 TikTok</a> &nbsp;·&nbsp; <a href="https://www.facebook.com/profile.php?id=61589331091991" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;">📘 Facebook</a></p><p class="contact-note">Codzienne horoskopy i inspiracje.</p></div>
-                <div class="contact-card"><div class="contact-icon">💼</div><h3>Współpraca</h3><p>Jesteś astrologiem lub twórcą treści ezoterycznych?</p><p class="contact-note">Napisz — chętnie porozmawiamy.</p></div>
-            </div>
-            <div class="contact-form-box">
-                <h2 style="font-family:'Cinzel',serif;color:var(--gold);margin-bottom:20px;font-size:1.1rem;">WYŚLIJ WIADOMOŚĆ</h2>
-                <div style="display:flex;flex-direction:column;gap:14px;">
-                    <input type="text" id="contact-name" class="mystic-input" placeholder="Twoje imię" style="text-align:left;padding-left:18px;" />
-                    <input type="email" id="contact-email" class="mystic-input" placeholder="Adres e-mail" style="text-align:left;padding-left:18px;" />
-                    <textarea id="contact-message" class="journal-textarea" placeholder="Treść wiadomości..." style="min-height:130px;"></textarea>
-                    <button class="action-btn" onclick="sendContactForm()" style="align-self:flex-start;">WYŚLIJ ✦</button>
-                    <div id="contact-confirmation" style="display:none;color:#7fc47f;font-family:'Cinzel',serif;font-size:0.85rem;">✓ Wiadomość wysłana! Odpiszemy wkrótce.</div>
-                </div>
+            <p style="color:rgba(255,255,255,0.6);text-align:center;margin-bottom:36px;font-style:italic;">Śledź nas w mediach społecznościowych — codzienne horoskopy i kosmiczne inspiracje.</p>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;max-width:760px;margin:0 auto;">
+
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/gwiezdnyprzewodnik/" target="_blank" rel="noopener" style="text-decoration:none;">
+                    <div style="background:rgba(15,15,28,0.85);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:32px 20px;text-align:center;transition:border-color 0.3s,transform 0.3s;cursor:pointer;" onmouseover="this.style.borderColor='rgba(212,175,55,0.7)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.25)';this.style.transform='translateY(0)'">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="52" height="52" style="margin-bottom:14px;">
+                            <defs>
+                                <linearGradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#f09433"/>
+                                    <stop offset="25%" style="stop-color:#e6683c"/>
+                                    <stop offset="50%" style="stop-color:#dc2743"/>
+                                    <stop offset="75%" style="stop-color:#cc2366"/>
+                                    <stop offset="100%" style="stop-color:#bc1888"/>
+                                </linearGradient>
+                            </defs>
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5" fill="url(#ig-grad)"/>
+                            <circle cx="12" cy="12" r="4.5" fill="none" stroke="white" stroke-width="1.8"/>
+                            <circle cx="17.5" cy="6.5" r="1.1" fill="white"/>
+                        </svg>
+                        <div style="font-family:'Cinzel',serif;color:var(--gold,#d4af37);font-size:1rem;letter-spacing:0.05em;margin-bottom:6px;">Instagram</div>
+                        <div style="color:rgba(255,255,255,0.45);font-size:0.8rem;">@gwiezdnyprzewodnik</div>
+                    </div>
+                </a>
+
+                <!-- TikTok -->
+                <a href="https://www.tiktok.com/@gwiezdnyprzewodnikpl?lang=pl-PL" target="_blank" rel="noopener" style="text-decoration:none;">
+                    <div style="background:rgba(15,15,28,0.85);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:32px 20px;text-align:center;transition:border-color 0.3s,transform 0.3s;cursor:pointer;" onmouseover="this.style.borderColor='rgba(212,175,55,0.7)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.25)';this.style.transform='translateY(0)'">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="52" height="52" style="margin-bottom:14px;">
+                            <rect width="24" height="24" rx="6" fill="#010101"/>
+                            <path d="M16.6 5.82s.51.5 0 0A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.59 2.59 0 0 1-2.59-2.59 2.59 2.59 0 0 1 2.59-2.59c.24 0 .47.04.69.1V9.68a5.67 5.67 0 0 0-.69-.04 5.68 5.68 0 0 0-5.68 5.68 5.68 5.68 0 0 0 5.68 5.68 5.68 5.68 0 0 0 5.68-5.68V8.61a7.33 7.33 0 0 0 4.29 1.37V6.9a4.31 4.31 0 0 1-2.73-1.08z" fill="white"/>
+                            <path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5 2.59 2.59 0 0 1-2.59-2.59 2.59 2.59 0 0 1 2.59-2.59c.24 0 .47.04.69.1V9.68a5.67 5.67 0 0 0-.69-.04 5.68 5.68 0 0 0-5.68 5.68 5.68 5.68 0 0 0 5.68 5.68 5.68 5.68 0 0 0 5.68-5.68V8.61a7.33 7.33 0 0 0 4.29 1.37V6.9a4.31 4.31 0 0 1-2.73-1.08z" fill="#69C9D0" opacity="0.6"/>
+                        </svg>
+                        <div style="font-family:'Cinzel',serif;color:var(--gold,#d4af37);font-size:1rem;letter-spacing:0.05em;margin-bottom:6px;">TikTok</div>
+                        <div style="color:rgba(255,255,255,0.45);font-size:0.8rem;">@gwiezdnyprzewodnikpl</div>
+                    </div>
+                </a>
+
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/profile.php?id=61589331091991" target="_blank" rel="noopener" style="text-decoration:none;">
+                    <div style="background:rgba(15,15,28,0.85);border:1px solid rgba(212,175,55,0.25);border-radius:16px;padding:32px 20px;text-align:center;transition:border-color 0.3s,transform 0.3s;cursor:pointer;" onmouseover="this.style.borderColor='rgba(212,175,55,0.7)';this.style.transform='translateY(-4px)'" onmouseout="this.style.borderColor='rgba(212,175,55,0.25)';this.style.transform='translateY(0)'">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="52" height="52" style="margin-bottom:14px;">
+                            <rect width="24" height="24" rx="6" fill="#1877F2"/>
+                            <path d="M13.5 21v-7.5h2.5l.5-3H13.5V8.5c0-.83.42-1.5 1.5-1.5H17V4.5s-1-.5-2.5-.5c-2.5 0-4 1.5-4 4V10.5H8v3h2.5V21h3z" fill="white"/>
+                        </svg>
+                        <div style="font-family:'Cinzel',serif;color:var(--gold,#d4af37);font-size:1rem;letter-spacing:0.05em;margin-bottom:6px;">Facebook</div>
+                        <div style="color:rgba(255,255,255,0.45);font-size:0.8rem;">Gwiezdny Przewodnik</div>
+                    </div>
+                </a>
+
             </div>
         </div>
     </section>
