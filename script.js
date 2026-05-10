@@ -775,7 +775,7 @@ function saveGeneratedArticle() {
 // ============================================================
 // --- GEMINI AI HELPER ---
 // ============================================================
-const GROQ_API_KEY = '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';
+const GROQ_API_KEY = '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';
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 async function callGemini(prompt) {
