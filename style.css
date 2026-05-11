@@ -59,10 +59,11 @@ h1 {
 .mystic-nav {
     margin: 35px 0 10px;
     display: flex;
-    gap: 12px;
+    gap: 8px;
     z-index: 10;
     flex-wrap: wrap;
     justify-content: center;
+    padding: 0 8px;
 }
 
 .nav-btn {
@@ -76,6 +77,15 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     transition: all 0.3s ease;
+}
+
+@media (max-width: 480px) {
+    .nav-btn {
+        padding: 8px 11px;
+        font-size: 0.68rem;
+        letter-spacing: 0.04em;
+    }
+    .mystic-nav { gap: 6px; margin: 20px 0 8px; }
 }
 
 .nav-btn:hover {
@@ -114,6 +124,9 @@ h1 {
     width: 100%;
     margin-bottom: 30px;
 }
+
+@media (max-width: 700px) { .zodiac-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; } }
+@media (max-width: 480px) { .zodiac-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; } }
 
 .sign-card {
     background: var(--card-bg);
@@ -155,6 +168,18 @@ h1 {
     word-break: break-word;
     overflow-wrap: break-word;
     box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+    .result-panel {
+        padding: 18px 14px;
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 8px;
+    }
+    .result-panel h2 { font-size: 1.2rem; }
+    .result-panel p  { font-size: 0.95rem; }
 }
 
 .result-panel h2 {
@@ -986,4 +1011,118 @@ select.mystic-input option {
 
 @media (max-width: 680px) {
     .contact-grid { grid-template-columns: 1fr; }
+}
+
+/* ---- KAMIENIE & MINERAŁY ---- */
+.kamienie-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 10px;
+}
+
+.kamien-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 12px;
+    padding: 22px 18px;
+    transition: border-color 0.3s, transform 0.3s;
+}
+
+.kamien-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+}
+
+.kamien-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(212,175,55,0.2);
+}
+
+.kamien-znak {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+}
+
+.kamien-daty {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.35);
+}
+
+.kamien-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.kamien-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.kamien-emoji {
+    font-size: 1.4rem;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.kamien-item strong {
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.82rem;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.kamien-item p {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.78rem;
+    line-height: 1.5;
+    margin: 0;
+}
+
+@media (max-width: 900px) { .kamienie-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 500px) { .kamienie-grid { grid-template-columns: 1fr; } }
+@media (max-width: 500px) {
+    /* 3 karty w jednym rzędzie na małym ekranie — zmniejszamy padding i font */
+    #contact-tab .legal-box > div {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 10px !important;
+        padding: 0 4px;
+    }
+    #contact-tab a > div {
+        padding: 18px 6px !important;
+        border-radius: 12px !important;
+    }
+    #contact-tab svg {
+        width: 36px !important;
+        height: 36px !important;
+        margin-bottom: 8px !important;
+    }
+    #contact-tab .legal-box div[style*="font-family:'Cinzel'"] {
+        font-size: 0.72rem !important;
+    }
+    #contact-tab div[style*="font-size:0.8rem"] {
+        display: none; /* ukryj @handle na bardzo małym ekranie */
+    }
+}
+
+/* ---- HOROSKOP MOBILE ---- */
+@media (max-width: 480px) {
+    #horoscope-display {
+        padding: 16px 12px !important;
+    }
+    .signs-grid, .zodiac-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+    }
+    .hint-box { padding: 12px 10px; }
 }
