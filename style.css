@@ -109,6 +109,12 @@ h1 {
     max-width: 1100px;
     padding: 10px 0 60px;
     z-index: 1;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+@media (max-width: 480px) {
+    .tab-content { width: 96%; padding: 10px 4px 60px; }
 }
 
 .tab-content.active {
@@ -119,14 +125,15 @@ h1 {
 /* --- ZODIAK --- */
 .zodiac-grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 14px;
     width: 100%;
     margin-bottom: 30px;
+    box-sizing: border-box;
 }
 
-@media (max-width: 700px) { .zodiac-grid { grid-template-columns: repeat(4, 1fr); gap: 10px; } }
-@media (max-width: 480px) { .zodiac-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; } }
+@media (max-width: 700px) { .zodiac-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; } }
+@media (max-width: 380px) { .zodiac-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; } }
 
 .sign-card {
     background: var(--card-bg);
@@ -727,16 +734,13 @@ select.mystic-input option {
 @media (max-width: 900px) {
     .recipes-grid { grid-template-columns: repeat(2, 1fr); }
     .recipe-card.daily-highlight { grid-column: span 2; }
-    .zodiac-grid { grid-template-columns: repeat(4, 1fr); }
 }
 
 @media (max-width: 600px) {
     .recipes-grid { grid-template-columns: 1fr; }
     .recipe-card.daily-highlight { grid-column: span 1; }
-    .zodiac-grid { grid-template-columns: repeat(3, 1fr); }
     .modal-content { margin: 15% auto; padding: 28px; width: 92%; }
     h1 { font-size: 1.3rem; }
-    .nav-btn { padding: 10px 14px; font-size: 0.75rem; }
 }
 
 /* ============================================================
@@ -1118,11 +1122,6 @@ select.mystic-input option {
 
 /* ---- HOROSKOP MOBILE ---- */
 @media (max-width: 480px) {
-    #horoscope-display {
-        padding: 16px 12px !important;
-    }
-    .signs-grid, .zodiac-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-    }
+    #horoscope-display { padding: 16px 12px !important; }
     .hint-box { padding: 12px 10px; }
 }
