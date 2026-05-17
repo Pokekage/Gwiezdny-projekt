@@ -1116,5 +1116,7 @@ function renderDreamHistory() {
     `;
 }
  
-function clearDreams() {
+function clearDreams() {localStorage.removeItem('savedDreams');
+    renderDreamHistory();
+}
  
