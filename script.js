@@ -1117,3 +1117,4 @@ function renderDreamHistory() {
 }
  
 function clearDreams() {
+ 
