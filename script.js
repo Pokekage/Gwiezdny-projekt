@@ -886,24 +886,28 @@ function saveGeneratedArticle() {
 const GROQ_URL = '/api/groq';
  
 async function callGemini(prompt) {
-    const response = await fetch(GROQ_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            model: 'llama-3.3-70b-versatile',
-            max_tokens: 1200,
-            temperature: 0.8,
-            messages: [{ role: 'user', content: prompt }]
-        })
-    });
-    if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error?.message || 'Błąd API Groq');
+    try {
+        const response = await fetch(GROQ_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: 'llama-3.3-70b-versatile',
+                max_tokens: 1200,
+                temperature: 0.8,
+                messages: [{ role: 'user', content: prompt }]
+            })
+        });
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error?.message || 'Błąd API Groq');
+        }
+        const data = await response.json();
+        return data.choices[0].message.content;
+    } catch (e) {
+        throw new Error('Brak połączenia z AI: ' + e.message);
     }
-    const data = await response.json();
-    return data.choices[0].message.content;
 }
  
 async function generateBlogArticle() {
