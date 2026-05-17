@@ -16,7 +16,7 @@ body {
     font-family: 'Spectral', serif;
     background:
         linear-gradient(rgba(0, 0, 0, 0.78), rgba(0, 0, 0, 0.78)),
-        url('gwiezdny_przewodnik_feature_graphic.png') center center / cover no-repeat fixed;
+        url('mystic_night_sky_background.png') center center / cover no-repeat fixed;
     color: white;
     min-height: 100vh;
     display: flex;
