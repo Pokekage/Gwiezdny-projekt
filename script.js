@@ -882,15 +882,14 @@ function saveGeneratedArticle() {
 // ============================================================
 // --- GEMINI AI HELPER ---
 // ============================================================
-const GROQ_API_KEY = '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';
-const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+const GROQ_URL = '/api/groq';
  
 async function callGemini(prompt) {
     const response = await fetch(GROQ_URL, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${GROQ_API_KEY}`
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             model: 'llama-3.3-70b-versatile',
