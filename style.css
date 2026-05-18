@@ -9,6 +9,7 @@
     --card-bg: rgba(15, 15, 28, 0.9);
 }
 html {
+    height: -webkit-fill-available;
     overscroll-behavior: none;
     background: #050010;
 }
@@ -23,6 +24,7 @@ body {
         url('mystic_night_sky_background.png') center center / cover no-repeat scroll;
     color: white;
     min-height: 100vh;
+    min-height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
     align-items: center;
