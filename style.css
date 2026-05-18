@@ -197,12 +197,11 @@ h1 {
 /* --- PANEL WYNIKU (horoskop + lunacja) --- */
 .result-panel {
     display: none;
-    margin-top: 25px;
-    margin-left: auto;
-    margin-right: auto;
-    background: var(--card-bg);
-    border: 1px solid var(--gold);
-    padding: 30px;
+    height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    border: none;
     width: 100%;
     max-width: 620px;
     text-align: center;
@@ -210,6 +209,18 @@ h1 {
     word-break: break-word;
     overflow-wrap: break-word;
     box-sizing: border-box;
+}
+
+.result-panel.visible {
+    display: block;
+    height: auto;
+    overflow: visible;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px;
+    border: 1px solid var(--gold);
+    background: var(--card-bg);
 }
 
 @media (max-width: 600px) {
