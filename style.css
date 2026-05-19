@@ -19,11 +19,9 @@ html {
 
 body {
     font-family: 'Spectral', serif;
-    background:
-        linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
-        url('mystic_night_sky_background.jpg') center center / cover no-repeat fixed;
+    background: transparent;
     color: white;
-    min-height: 100vh;
+    min-height: 100svh;
     min-height: -webkit-fill-available;
     display: flex;
     flex-direction: column;
@@ -1182,4 +1180,31 @@ select.mystic-input option {
     .tarot-card-wrap { width: 240px; height: 360px; }
     .compat-box { padding: 24px 20px; }
     .moon-today-box, .moon-calculator-box, .moon-result-panel { padding: 22px 24px; }
+}
+
+/* Ukrywa pustą przestrzeń reklamy gdy AdSense się nie załaduje (np. Messenger webview) */
+#bottom-ad-wrap ins.adsbygoogle[data-ad-status="unfilled"] {
+    display: none !important;
+}
+#bottom-ad-wrap:has(ins.adsbygoogle[data-ad-status="unfilled"]) {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+.adsbygoogle[data-ad-status="unfilled"] {
+    display: none !important;
+    height: 0 !important;
+    min-height: 0 !important;
+}
+
+/* === FIX: tło nieruchome na mobile (background-attachment:fixed nie działa na iOS/Android) === */
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+        url('mystic_night_sky_background.jpg') center center / cover no-repeat;
+    will-change: transform;
 }
