@@ -1,9 +1,9 @@
 // ============================================================
-// GWIEZDNY PRZEWODNIK — script.js (wersja rozszerzona)
+// GWIEZDNY PRZEWODNIK — script.js (wersja wielostronicowa)
 // ============================================================
- 
+
 // --- 1. BAZA DANYCH ---
- 
+
 // 28 przepisów (4 tygodnie bez powtórzeń)
 const allRecipes = [
     { t: "Złociste Risotto", d: "Wzmacnia pewność siebie i dodaje blasku.", m: "Składniki: Ryż arborio, szafran, parmezan, bulion warzywny.\n\nGotuj powoli, podlewając bulionem łyżką po łyżce i mieszając, aż ziarna będą kremowe i al dente. Na koniec, już po zdjęciu z ognia, dodaj zimne masło i świeżo starty parmezan — to sekret kremowej konsystencji. Podawaj natychmiast." },
@@ -35,7 +35,7 @@ const allRecipes = [
     { t: "Czekoladowa Fontanna Nocy", d: "Gorzki sekret wszechświata.", m: "Rozpuść 200g gorzkiej czekolady (min. 70%) z 100ml gorącej śmietanki. Dodaj szczyptę soli morskiej, szczyptę chili i łyżeczkę kawy espresso. Podawaj jako fondue z owocami: truskawki, banan, gruszka." },
     { t: "Zupa Pomidorowa Słońca", d: "Esencja letniego południa.", m: "Podsmaż cebulę i czosnek, dodaj 1kg dojrzałych pomidorów (lub 2 puszki), garść bazylii i szczyptę cukru. Gotuj 25 minut. Zblenduj i dopraw. Podawaj z łyżką mascarpone w środku i grzanką z czosnkiem." }
 ];
- 
+
 // 49 tekstów horoskopów (7 tygodni bez powtórzeń)
 const horoscopeTexts = [
     "Dzisiejsze gwiazdy sprzyjają Twoim planom finansowym. Uważaj jednak na gwałtowne emocje — Merkury w opozycji ostrzega przed pochopnymi decyzjami.",
@@ -88,7 +88,7 @@ const horoscopeTexts = [
     "Energia transformacji Plutona zbliża się do kulminacji w Twoim znaku. Coś się definitywnie kończy — i to dobrze.",
     "Gwiezdny taniec dobiega końca tygodnia. Podsumuj, czego się nauczyłeś, i wejdź w nowy cykl z wdzięcznością."
 ];
- 
+
 const moonPhases = [
     {
         name: "Nów", icon: "🌑",
@@ -147,111 +147,81 @@ const moonPhases = [
         avoidList: ["Forsowania się i nadmiernego wysiłku", "Ważnych spotkań biznesowych", "Zaczynania diety lub intensywnych ćwiczeń", "Podejmowania długoterminowych zobowiązań"]
     }
 ];
- 
+
 // --- 2. FUNKCJE DATY ---
 function getDayOfYear() {
     const now = new Date();
     return Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
 }
- 
+
 // Horoskop: każdy znak inny tekst każdego dnia, powtórzenia po 49 dniach
 function getDailyIndex(arr, signIndex = 0) {
     return (getDayOfYear() * 3 + signIndex * 7) % arr.length;
 }
- 
+
 // Przepis: każdy znak dostaje INNY przepis tego samego dnia
-// Używamy innego przesunięcia (signIndex * 3) by znaki nie nakładały się
 function getDailyRecipeIndex(signIndex) {
     const day = getDayOfYear();
-    // Przesunięcie co 3 przepisy na znak — przy 28 przepisach i 12 znakach
-    // każdy znak ma inny przepis, i zmienia się codziennie
     return (day + signIndex * 3) % allRecipes.length;
 }
- 
-// --- 3. INICJALIZACJA ---
+
+// --- 3. INICJALIZACJA (strona główna / horoskop) ---
 document.addEventListener('DOMContentLoaded', () => {
     const grid = document.getElementById('zodiac-grid');
-    const signs = [
-        { name: "Baran", sym: "♈" }, { name: "Byk", sym: "♉" },
-        { name: "Bliźnięta", sym: "♊" }, { name: "Rak", sym: "♋" },
-        { name: "Lew", sym: "♌" }, { name: "Panna", sym: "♍" },
-        { name: "Waga", sym: "♎" }, { name: "Skorpion", sym: "♏" },
-        { name: "Strzelec", sym: "♐" }, { name: "Koziorożec", sym: "♑" },
-        { name: "Wodnik", sym: "♒" }, { name: "Ryby", sym: "♓" }
-    ];
- 
-    grid.innerHTML = "";
-    signs.forEach((s, index) => {
-        const card = document.createElement('div');
-        card.className = 'sign-card';
-        card.innerHTML = `<span class="sign-symbol">${s.sym}</span><p>${s.name}</p>`;
-        card.onclick = () => showHoroscope(s.name, index);
-        grid.appendChild(card);
-    });
- 
-    // Cząsteczki gwiezdnego tła
-    createStarParticles();
+    if (grid) {
+        const signs = [
+            { name: "Baran", sym: "♈" }, { name: "Byk", sym: "♉" },
+            { name: "Bliźnięta", sym: "♊" }, { name: "Rak", sym: "♋" },
+            { name: "Lew", sym: "♌" }, { name: "Panna", sym: "♍" },
+            { name: "Waga", sym: "♎" }, { name: "Skorpion", sym: "♏" },
+            { name: "Strzelec", sym: "♐" }, { name: "Koziorożec", sym: "♑" },
+            { name: "Wodnik", sym: "♒" }, { name: "Ryby", sym: "♓" }
+        ];
+
+        grid.innerHTML = "";
+        signs.forEach((s, index) => {
+            const card = document.createElement('div');
+            card.className = 'sign-card';
+            card.innerHTML = `<span class="sign-symbol">${s.sym}</span><p>${s.name}</p>`;
+            card.onclick = () => showHoroscope(s.name, index);
+            grid.appendChild(card);
+        });
+    }
+
+    // Strony które renderują swoją treść od razu po wejściu (bo nie ma już zakładek JS)
+    if (document.getElementById('recipes-list')) renderRecipes();
+    if (document.getElementById('journal-entries')) loadJournal();
+    if (document.getElementById('blog-articles-list')) loadBlog();
+    if (document.getElementById('dream-history')) renderDreamHistory();
 });
- 
-// --- 4. CZĄSTECZKI (GWIAZDY W TLE) --- wyłączone dla wydajności
-function createStarParticles() {
-    // Gwiazdki wyłączone - zbyt duże obciążenie dla przeglądarki
+
+// --- 5. NAWIGACJA (aktywny przycisk ustawiany po stronie HTML klasą .active na <a>) ---
+function goToDailyRecipe() {
+    window.location.href = 'ksiega-smakow.html';
 }
- 
-// --- 5. NAWIGACJA ---
-function showTab(idOrEvent, btnOrId) {
-    // Support both old: showTab(event, 'id') and new: showTab('id', btnEl)
-    let id, btn;
-    if (typeof idOrEvent === 'string') {
-        id = idOrEvent;
-        btn = btnOrId;
-    } else {
-        id = btnOrId;
-        btn = idOrEvent ? idOrEvent.currentTarget : null;
-    }
- 
-    document.querySelectorAll('.tab-content').forEach(t => {
-        t.classList.remove('active');
-        t.style.animation = '';
-    });
-    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
- 
-    const target = document.getElementById(id);
-    if (!target) return;
-    target.classList.add('active');
-    target.style.animation = 'fadeInUp 0.5s ease forwards';
- 
-    if (btn && typeof btn.classList !== 'undefined') {
-        btn.classList.add('active');
-    }
- 
-    if (id === 'recipes-tab') renderRecipes();
-    if (id === 'sennik-tab') renderDreamHistory();
-}
- 
+
 // --- 6. HOROSKOP ---
 async function showHoroscope(sign, signIndex) {
     lastSelectedSign = sign;
     lastSelectedSignIndex = signIndex;
     const recipeIndex = getDailyRecipeIndex(signIndex);
     const recipe = allRecipes[recipeIndex];
- 
+
     const display = document.getElementById('horoscope-display');
     display.style.display = 'block';
     display.style.animation = 'fadeInUp 0.5s ease forwards';
     document.getElementById('selected-sign').innerText = sign;
     display.scrollIntoView({ behavior: 'smooth', block: 'center' });
- 
-    // Pokaż loader
+
     const horoEl = document.getElementById('horoscope-text');
     horoEl.innerHTML = `<span style="color:var(--gold);font-style:italic;opacity:0.7;">✨ Gwiazdy przemawiają... ✨</span>`;
- 
+
     const today = new Date();
     const dateStr = today.toLocaleDateString('pl-PL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
- 
+
     const prompt = `Jesteś doświadczonym astrologiem piszącym dla polskiej witryny mistycznej. 
 Napisz horoskop dzienny dla znaku ${sign} na dzień ${dateStr}.
- 
+
 Horoskop musi być:
 - Napisany po polsku, pięknym poetyckim językiem
 - Podzielony na 3 krótkie akapity (każdy 2-3 zdania)
@@ -261,32 +231,28 @@ Horoskop musi być:
 - Tajemniczy, mistyczny, ale konkretny i pomocny
 - BEZ nagłówków, BEZ gwiazdek, BEZ cudzysłowów — tylko czysty tekst z pustą linią między akapitami
 - Długość: ok. 120-150 słów łącznie`;
- 
+
     try {
         const text = await callGemini(prompt);
-        // Renderuj z ładnym formatowaniem — akapity jako osobne bloki
         const paragraphs = text.trim().split(/\n\n+/);
         horoEl.innerHTML = paragraphs
             .map(p => `<p style="margin-bottom:14px;line-height:1.85;">${p.trim()}</p>`)
             .join('');
     } catch (e) {
-        // Fallback na statyczny tekst jeśli AI zawiedzie
         const textIndex = getDailyIndex(horoscopeTexts, signIndex);
         typewriterEffect('horoscope-text', horoscopeTexts[textIndex]);
     }
- 
+
     document.getElementById('daily-dish-hint').innerHTML = `
         <p style="font-size:0.9rem; margin-bottom: 10px;">🍲 Magiczny posiłek gwiazd na dziś: <strong style="color:var(--gold)">${recipe.t}</strong></p>
         <button class="action-btn" onclick="goToDailyRecipe()">ODKRYJ PRZEPIS ✨</button>
     `;
 }
- 
+
 function typewriterEffect(elementId, text) {
     const el = document.getElementById(elementId);
     el.textContent = '';
     let i = 0;
-    // Budujemy string osobno i przypisujemy za jednym razem — unikamy
-    // problemu z gubionymi spacjami przy polskich znakach i innerText +=
     let built = '';
     const interval = setInterval(() => {
         if (i < text.length) {
@@ -298,52 +264,40 @@ function typewriterEffect(elementId, text) {
         }
     }, 22);
 }
- 
-// Zapamiętany znak z horoskopu
+
 let lastSelectedSign = null;
 let lastSelectedSignIndex = null;
- 
-function goToDailyRecipe() {
-    showTab('recipes-tab', null);
-}
- 
+
 // --- 7. PRZEPISY ---
 async function renderRecipes() {
     const list = document.getElementById('recipes-list');
     const now = new Date();
     const dateStr = now.toLocaleDateString('pl-PL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-    const todayKey = now.toISOString().slice(0, 10); // YYYY-MM-DD
- 
-    // Wybrany znak (jeśli user kliknął horoskop) lub fallback
+    const todayKey = now.toISOString().slice(0, 10);
+
     const sign = lastSelectedSign || 'Baran';
     const cacheKey = `recipe_${sign}_${todayKey}`;
- 
-    // Sprawdź cache w localStorage
+
     let cached = null;
     try { cached = JSON.parse(localStorage.getItem(cacheKey)); } catch(e) {}
- 
-    // Statyczne przepisy zawsze widoczne
+
     list.innerHTML = '';
- 
-    // Karta dnia na górze — AI lub loader
+
     const dailyCard = document.createElement('div');
     dailyCard.className = 'recipe-card daily-highlight';
     dailyCard.id = 'daily-recipe-card';
- 
+
     if (cached) {
-        // Mamy cache — pokaż od razu
         dailyCard.innerHTML = buildDailyCardHTML(cached.title, cached.desc, cached.recipe, sign, dateStr);
         dailyCard.onclick = () => openModal(cached.title, cached.recipe);
     } else {
-        // Loader
         dailyCard.innerHTML = `
             <span class="daily-badge">🌟 PRZEPIS GWIAZD NA DZIŚ 🌟</span>
             <p style="color:var(--gold);font-family:'Cinzel',serif;font-size:0.85rem;margin:10px 0;">✨ Gwiazdy komponują przepis dla ${sign}... ✨</p>
         `;
     }
     list.appendChild(dailyCard);
- 
-    // Statyczne przepisy poniżej
+
     allRecipes.forEach((r, i) => {
         const card = document.createElement('div');
         card.className = 'recipe-card';
@@ -352,20 +306,19 @@ async function renderRecipes() {
         card.onclick = () => openModal(r.t, r.m);
         list.appendChild(card);
     });
- 
-    // Generuj AI jeśli brak cache
+
     if (!cached) {
         try {
             const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
             const prompt = `Jesteś astrologicznym kucharzem. Stwórz unikalny przepis kulinarny na dziś (dzień ${dayOfYear} roku ${now.getFullYear()}) dla znaku zodiaku ${sign}.
- 
+
 Przepis musi być:
 - Po polsku, z poetycką, mistyczną nazwą nawiązującą do astrologii lub natury
 - Dopasowany energetycznie do znaku ${sign} i jego żywiołu
 - Inny niż poprzednie dni — dziś jest dzień ${dayOfYear}/365 roku
 - Realny do wykonania w domu (max 6 składników)
 - Może być danie główne, zupa, deser, napój lub śniadanie
- 
+
 Odpowiedz TYLKO w formacie JSON (bez żadnego tekstu przed ani po):
 {
   "title": "Nazwa przepisu",
@@ -373,27 +326,24 @@ Odpowiedz TYLKO w formacie JSON (bez żadnego tekstu przed ani po):
   "ingredients": "Składniki: składnik1, składnik2, składnik3...",
   "steps": "Kroki przygotowania w 3-4 zdaniach."
 }`;
- 
+
             const text = await callGemini(prompt);
             const clean = text.replace(/```json|```/g, '').trim();
             const data = JSON.parse(clean);
             const recipe = `${data.ingredients}\n\n${data.steps}`;
- 
-            // Zapisz do cache
+
             localStorage.setItem(cacheKey, JSON.stringify({
                 title: data.title,
                 desc: data.desc,
                 recipe: recipe
             }));
- 
-            // Aktualizuj kartę
+
             const card = document.getElementById('daily-recipe-card');
             if (card) {
                 card.innerHTML = buildDailyCardHTML(data.title, data.desc, recipe, sign, dateStr);
                 card.onclick = () => openModal(data.title, recipe);
             }
         } catch(e) {
-            // Fallback na statyczny przepis
             const fallback = allRecipes[getDailyIndex(allRecipes, 0)];
             const card = document.getElementById('daily-recipe-card');
             if (card) {
@@ -403,7 +353,7 @@ Odpowiedz TYLKO w formacie JSON (bez żadnego tekstu przed ani po):
         }
     }
 }
- 
+
 function buildDailyCardHTML(title, desc, recipe, sign, dateStr) {
     return `
         <span class="daily-badge">🌟 PRZEPIS GWIAZD DLA ${sign.toUpperCase()} — DZIŚ 🌟</span>
@@ -412,21 +362,20 @@ function buildDailyCardHTML(title, desc, recipe, sign, dateStr) {
         <span style="font-size:0.75rem;color:rgba(212,175,55,0.6);margin-top:8px;display:block;">Kliknij, by zobaczyć przepis ✨</span>
     `;
 }
- 
+
 // --- 8. MODAL ---
 function openModal(title, text) {
     document.getElementById('modal-title').innerText = title;
-    // Zamień \n na <br> dla lepszego formatowania
     document.getElementById('modal-body').innerHTML = text.replace(/\n/g, '<br>');
     const modal = document.getElementById('recipe-modal');
     modal.style.display = 'block';
     setTimeout(() => modal.querySelector('.modal-content').style.transform = 'scale(1)', 10);
 }
- 
+
 function closeModal() {
     document.getElementById('recipe-modal').style.display = 'none';
 }
- 
+
 // --- 9. LUNACJA ---
 function getMoonPhaseForDate(date) {
     const refDate = new Date(2000, 0, 6);
@@ -436,12 +385,12 @@ function getMoonPhaseForDate(date) {
     const index = Math.floor(pos / (cycle / 8)) % 8;
     return { phase: moonPhases[index], pos: pos, cycle: cycle };
 }
- 
+
 function renderMoonResult(phase, pos, cycle, containerId) {
     const res = document.getElementById(containerId);
     res.style.display = 'block';
     res.style.animation = 'fadeInUp 0.6s ease forwards';
- 
+
     const iconEl = res.querySelector('.moon-icon-el');
     iconEl.style.transform = 'scale(0)';
     iconEl.textContent = phase.icon;
@@ -449,12 +398,11 @@ function renderMoonResult(phase, pos, cycle, containerId) {
         iconEl.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
         iconEl.style.transform = 'scale(1)';
     }, 100);
- 
+
     res.querySelector('.moon-name-el').textContent = phase.name;
     res.querySelector('.moon-desc-el').textContent = phase.desc;
     res.querySelector('.moon-elixir-el').textContent = '✨ Zalecany eliksir: ' + phase.elixir;
- 
-    // Pasek cyklu (jak daleko w cyklu 29.53 dni)
+
     const pct = Math.round((pos / cycle) * 100);
     const bar = res.querySelector('.moon-cycle-bar-fill');
     if (bar) {
@@ -462,37 +410,36 @@ function renderMoonResult(phase, pos, cycle, containerId) {
         setTimeout(() => { bar.style.width = pct + '%'; }, 200);
         res.querySelector('.moon-cycle-label').textContent = `Dzień ${Math.round(pos)} z 29 cyklu księżycowego`;
     }
- 
-    // Listy co robić / czego unikać
+
     const doEl = res.querySelector('.moon-do-list');
     const avoidEl = res.querySelector('.moon-avoid-list');
     if (doEl) {
         doEl.innerHTML = phase.doList.map(i => `<li>✓ ${i}</li>`).join('');
         avoidEl.innerHTML = phase.avoidList.map(i => `<li>✗ ${i}</li>`).join('');
     }
- 
+
     res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
- 
+
 function showTodayMoon() {
     const { phase, pos, cycle } = getMoonPhaseForDate(new Date());
     renderMoonResult(phase, pos, cycle, 'moon-today-result');
 }
- 
+
 function calculateMoonPhase() {
     const dateVal = document.getElementById('birth-date').value;
     if (!dateVal) return alert("Proszę wybrać datę urodzenia!");
     const { phase, pos, cycle } = getMoonPhaseForDate(new Date(dateVal));
     renderMoonResult(phase, pos, cycle, 'moon-result');
 }
- 
+
 window.onclick = (event) => {
     const modal = document.getElementById('recipe-modal');
-    if (event.target === modal) closeModal();
+    if (modal && event.target === modal) closeModal();
     const tarotModal = document.getElementById('tarot-modal');
-    if (event.target === tarotModal) closeTarotModal();
+    if (tarotModal && event.target === tarotModal) closeTarotModal();
 };
- 
+
 // ============================================================
 // --- 10. TAROT DNIA ---
 // ============================================================
@@ -520,101 +467,94 @@ const tarotCards = [
     { name: "Świat", num: "XXI", sym: "🌍", meaning: "Jesteś u kresu i początku jednocześnie. Cykl się domknął — świętuj to, czego dokonałeś, i wejdź w nowy rozdział z pełnią siebie.", shadow: "Zatrzymanie się na sukcesie to stagnacja." },
     { name: "Głupiec", num: "0", sym: "🎒", meaning: "Skok w nieznane! Bądź jak dziecko — ciekaw, otwarty i bez balastu przeszłości. Nowa przygoda zaczyna się dokładnie tam, gdzie stoisz.", shadow: "Beztroska bez uważności to lekkomyślność." }
 ];
- 
+
 function renderTarot() {
     const now = new Date();
     const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
     const cardIndex = dayOfYear % tarotCards.length;
     const card = tarotCards[cardIndex];
- 
+
     document.getElementById('tarot-sym').textContent = card.sym;
     document.getElementById('tarot-num').textContent = card.num;
     document.getElementById('tarot-name').textContent = card.name;
     document.getElementById('tarot-meaning').textContent = card.meaning;
     document.getElementById('tarot-shadow').textContent = '🌑 Cień: ' + card.shadow;
- 
-    // Animacja karty
+
     const cardEl = document.getElementById('tarot-card-display');
     cardEl.classList.remove('flipped');
-    void cardEl.offsetWidth; // reflow
+    void cardEl.offsetWidth;
     setTimeout(() => cardEl.classList.add('flipped'), 100);
 }
- 
+
 function openTarotModal() {
     document.getElementById('tarot-modal').style.display = 'flex';
     renderTarot();
 }
- 
+
 function closeTarotModal() {
     document.getElementById('tarot-modal').style.display = 'none';
 }
- 
+
 // ============================================================
 // --- 11. ZGODNOŚĆ ZNAKÓW ---
 // ============================================================
-// Macierz zgodności (0-100) dla 12 znaków
-// Indeksy: Baran=0, Byk=1, Bliźnięta=2, Rak=3, Lew=4, Panna=5,
-//           Waga=6, Skorpion=7, Strzelec=8, Koziorożec=9, Wodnik=10, Ryby=11
 const compatMatrix = [
-//  ♈  ♉  ♊  ♋  ♌  ♍  ♎  ♏  ♐  ♑  ♒  ♓
-    [75, 55, 80, 40, 95, 60, 70, 50, 90, 55, 65, 45], // Baran
-    [55, 80, 50, 85, 60, 90, 55, 75, 45, 95, 40, 70], // Byk
-    [80, 50, 75, 55, 75, 50, 85, 45, 80, 50, 90, 55], // Bliźnięta
-    [40, 85, 55, 80, 55, 70, 45, 90, 40, 65, 50, 95], // Rak
-    [95, 60, 75, 55, 80, 55, 75, 60, 85, 50, 65, 45], // Lew
-    [60, 90, 50, 70, 55, 75, 60, 80, 55, 85, 45, 65], // Panna
-    [70, 55, 85, 45, 75, 60, 80, 50, 75, 55, 90, 60], // Waga
-    [50, 75, 45, 90, 60, 80, 50, 85, 55, 70, 55, 95], // Skorpion
-    [90, 45, 80, 40, 85, 55, 75, 55, 80, 50, 70, 50], // Strzelec
-    [55, 95, 50, 65, 50, 85, 55, 70, 50, 80, 60, 75], // Koziorożec
-    [65, 40, 90, 50, 65, 45, 90, 55, 70, 60, 75, 60], // Wodnik
-    [45, 70, 55, 95, 45, 65, 60, 95, 50, 75, 60, 80]  // Ryby
+    [75, 55, 80, 40, 95, 60, 70, 50, 90, 55, 65, 45],
+    [55, 80, 50, 85, 60, 90, 55, 75, 45, 95, 40, 70],
+    [80, 50, 75, 55, 75, 50, 85, 45, 80, 50, 90, 55],
+    [40, 85, 55, 80, 55, 70, 45, 90, 40, 65, 50, 95],
+    [95, 60, 75, 55, 80, 55, 75, 60, 85, 50, 65, 45],
+    [60, 90, 50, 70, 55, 75, 60, 80, 55, 85, 45, 65],
+    [70, 55, 85, 45, 75, 60, 80, 50, 75, 55, 90, 60],
+    [50, 75, 45, 90, 60, 80, 50, 85, 55, 70, 55, 95],
+    [90, 45, 80, 40, 85, 55, 75, 55, 80, 50, 70, 50],
+    [55, 95, 50, 65, 50, 85, 55, 70, 50, 80, 60, 75],
+    [65, 40, 90, 50, 65, 45, 90, 55, 70, 60, 75, 60],
+    [45, 70, 55, 95, 45, 65, 60, 95, 50, 75, 60, 80]
 ];
- 
+
 const compatComments = {
     "90-100": ["Kosmiczne przeznaczenie — ta para pisana jest w gwiazdach!", "Rzadka magia harmonii — razem możecie wszystko.", "Energia między Wami jest niemal nadprzyrodzona."],
     "75-89":  ["Silna i naturalna więź — rozumiecie się bez słów.", "Dobra chemia i wzajemne uzupełnianie. Warto pielęgnować.", "Gwiazdy sprzyjają tej relacji — jest w niej prawdziwy potencjał."],
     "55-74":  ["Przeciętna zgodność — różnice mogą Was wzbogacić, jeśli będziecie cierpliwi.", "Relacja wymaga pracy, ale może być bardzo wartościowa.", "Różne energie — klucz to wzajemny szacunek i komunikacja."],
     "0-54":   ["Trudna para — kosmos stawia przed Wami wyzwania. Ale cuda się zdarzają!", "Duże różnice w podejściu do życia. Wymagana duża dojrzałość.", "Ogień i woda — może być gorąco, ale też twórczo."]
 };
- 
+
 function getCompatComment(score) {
     if (score >= 90) return compatComments["90-100"][Math.floor(Math.random() * 3)];
     if (score >= 75) return compatComments["75-89"][Math.floor(Math.random() * 3)];
     if (score >= 55) return compatComments["55-74"][Math.floor(Math.random() * 3)];
     return compatComments["0-54"][Math.floor(Math.random() * 3)];
 }
- 
+
 function calculateCompatibility() {
     const s1 = parseInt(document.getElementById('compat-sign1').value);
     const s2 = parseInt(document.getElementById('compat-sign2').value);
- 
+
     if (isNaN(s1) || isNaN(s2)) return alert("Wybierz oba znaki zodiaku!");
- 
+
     const score = compatMatrix[s1][s2];
     const comment = getCompatComment(score);
- 
+
     const resultEl = document.getElementById('compat-result');
     resultEl.style.display = 'block';
     resultEl.style.animation = 'fadeInUp 0.5s ease forwards';
- 
-    // Pasek postępu
+
     const bar = document.getElementById('compat-bar-fill');
     bar.style.width = '0%';
     setTimeout(() => { bar.style.width = score + '%'; }, 100);
- 
+
     document.getElementById('compat-score').textContent = score + '%';
     document.getElementById('compat-comment').textContent = comment;
- 
-    // Kolor paska w zależności od wyniku
+
     if (score >= 90)      bar.style.background = 'linear-gradient(90deg, #d4af37, #fff07a)';
     else if (score >= 75) bar.style.background = 'linear-gradient(90deg, #a0c878, #d4af37)';
     else if (score >= 55) bar.style.background = 'linear-gradient(90deg, #7a9fd4, #a0c878)';
     else                  bar.style.background = 'linear-gradient(90deg, #c87a7a, #7a9fd4)';
- 
+
     resultEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
- 
+
 // ============================================================
 // --- 12. DZIENNIK KOSMICZNY ---
 // ============================================================
@@ -622,17 +562,17 @@ function loadJournal() {
     const entries = getJournalEntries();
     renderJournalEntries(entries);
 }
- 
+
 function getJournalEntries() {
     try {
         return JSON.parse(localStorage.getItem('cosmicJournal') || '[]');
     } catch { return []; }
 }
- 
+
 function saveJournalEntry() {
     const text = document.getElementById('journal-input').value.trim();
     if (!text) return alert("Napisz coś przed zapisaniem ✨");
- 
+
     const entries = getJournalEntries();
     const now = new Date();
     entries.unshift({
@@ -642,20 +582,18 @@ function saveJournalEntry() {
         text: text,
         moon: getMoonEmoji()
     });
- 
+
     localStorage.setItem('cosmicJournal', JSON.stringify(entries));
     document.getElementById('journal-input').value = '';
     renderJournalEntries(entries);
- 
-    // Potwierdzenie
+
     const btn = document.getElementById('journal-save-btn');
     btn.textContent = '✓ ZAPISANO';
     btn.style.background = '#4a8c4a';
     setTimeout(() => { btn.textContent = 'ZAPISZ W GWIAZDACH ✨'; btn.style.background = ''; }, 2000);
 }
- 
+
 function getMoonEmoji() {
-    // Aktualna faza księżyca (uproszczona)
     const now = new Date();
     const refDate = new Date(2000, 0, 6);
     const days = (now - refDate) / (1000 * 60 * 60 * 24);
@@ -663,13 +601,13 @@ function getMoonEmoji() {
     const icons = ['🌑','🌒','🌓','🌔','🌕','🌖','🌗','🌘'];
     return icons[Math.floor(pos / (29.53 / 8)) % 8];
 }
- 
+
 function deleteJournalEntry(id) {
     const entries = getJournalEntries().filter(e => e.id !== id);
     localStorage.setItem('cosmicJournal', JSON.stringify(entries));
     renderJournalEntries(entries);
 }
- 
+
 function renderJournalEntries(entries) {
     const container = document.getElementById('journal-entries');
     if (entries.length === 0) {
@@ -687,11 +625,11 @@ function renderJournalEntries(entries) {
         </div>
     `).join('');
 }
- 
+
 // ============================================================
 // --- 13. BLOG / WIEDZA ASTROLOGICZNA ---
 // ============================================================
- 
+
 const staticArticles = [
     {
         id: 'art_001',
@@ -700,13 +638,13 @@ const staticArticles = [
         excerpt: 'Większość ludzi zna tylko swój znak zodiaku — czyli znak Słońca. Ale astrologia to znacznie więcej. Ascendent, zwany też znakiem wschodzącym, opisuje to, jak postrzegają Cię inni i jak wchodzisz w kontakt ze światem.',
         date: '12 maja 2025',
         body: `<p>Większość ludzi zna tylko jeden znak zodiaku — ten wynikający z daty urodzenia. Jest to <strong style="color:var(--gold)">znak Słońca</strong>, który opisuje Twoją głęboką naturę, ego i życiowe powołanie. To fundament Twojej osobowości.</p>
- 
+
 <p style="margin-top:16px;">Jednak horoskop urodzeniowy (natal chart) to znacznie bogatsza mapa. <strong style="color:var(--gold)">Ascendent</strong> — zwany też znakiem wschodzącym — to znak zodiaku, który znajdował się na wschodnim horyzoncie w momencie Twoich narodzin. Zmienia się co ok. 2 godziny, dlatego do jego obliczenia potrzebna jest dokładna godzina urodzenia.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">Co opisuje Ascendent?</strong><br>To Twoja "maska społeczna" — jak inni Cię postrzegają przy pierwszym spotkaniu, jaki styl bycia prezentujesz światu. Osoby z Ascendentem w Baranie mogą sprawiać wrażenie energicznych i odważnych, nawet jeśli ich Słońce w Rybach czyni je wewnętrznie wrażliwymi i marzycielskimi.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">Praktyczny przykład:</strong><br>Jeśli Twoje Słońce jest w Koziorożcu (ambicja, dyscyplina), ale Ascendent w Bliźniętach — świat widzi Cię jako osobę komunikatywną, dowcipną i otwartą. Dopiero bliższe poznanie ujawnia Twój wewnętrzny rdzeń.</p>
- 
+
 <p style="margin-top:16px;">Oprócz tych dwóch elementów, ogromną rolę odgrywa też <strong style="color:var(--gold)">znak Księżyca</strong> — opisuje Twoje emocje, potrzeby i to, co daje Ci poczucie bezpieczeństwa. Razem, Słońce, Księżyc i Ascendent tworzą astrologiczne "trio", które maluje pełniejszy portret Twojej duszy.</p>`
     },
     {
@@ -716,13 +654,13 @@ const staticArticles = [
         excerpt: 'Trzy do czterech razy w roku Merkury pozornie cofa się na niebie. Astrolodzy łączą ten okres z chaosem komunikacyjnym, awariami technologii i nieporozumieniami. Co tak naprawdę kryje się za tym zjawiskiem?',
         date: '28 kwietnia 2025',
         body: `<p><strong style="color:var(--gold)">Merkury retrograde</strong> to jeden z najbardziej znanych terminów astrologicznych — i jeden z najbardziej nierozumianych. Zacznijmy od astronomii: planet nie cofają się naprawdę. Retrograde (wsteczny ruch) to złudzenie optyczne wynikające z różnicy prędkości orbit Ziemi i Merkurego wokół Słońca. Gdy Merkury nas "wyprzedza", wygląda jakby poruszał się do tyłu względem gwiazd tła.</p>
- 
+
 <p style="margin-top:16px;">W astrologii Merkury rządzi komunikacją, technologią, transportem, umowami i myśleniem. Gdy porusza się wstecznie — symbolizuje to czas rewizji, ponownego przemyślenia i spowolnienia w tych obszarach.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">Co może się wydarzyć?</strong><br>Astrolodzy zalecają ostrożność przy podpisywaniu ważnych umów, kupnie elektroniki i planowaniu dalekich podróży. Nie dlatego, że planeta "psuje" rzeczy — ale dlatego, że okres ten sprzyja refleksji, a nie pochopnym decyzjom.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">Co WARTO robić podczas Merkurego retrograde?</strong><br>To idealny czas na: przeglądanie starych planów i projektów, odświeżanie relacji, które z jakiegoś powodu zamarły, naprawę tego, co zepsute — dosłownie i w przenośni. Przedrostek "re-" jest tu kluczowy: refleksja, reorganizacja, rekonekcja.</p>
- 
+
 <p style="margin-top:16px;">Merkury retrograde trwa ok. 3 tygodnie i pojawia się 3-4 razy w roku. Zamiast się go bać — potraktuj go jako kosmiczne zaproszenie do zwolnienia i głębszego namysłu.</p>`
     },
     {
@@ -732,21 +670,21 @@ const staticArticles = [
         excerpt: 'Nów to czas sadzenia intencji, pełnia — kulminacja i emocjonalne apogeum. Poznaj praktyczny przewodnik po 8 fazach Księżyca i dowiedz się, jak synchronizować życie z jego rytmem.',
         date: '15 kwietnia 2025',
         body: `<p>Księżyc od tysiącleci fascynuje ludzi. Wpływa na przypływy i odpływy oceanów — a nasze ciała składają się w ok. 60% z wody. Nic dziwnego, że wiele tradycji duchowych i astrologicznych przypisuje mu ogromne znaczenie dla ludzkiej psychiki i rytmu życia.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">🌑 Nów (Nowy Księżyc)</strong><br>Czas nowych początków. Idealna pora na zapisanie intencji, postawienie celów i zaczęcie czegoś świeżego. Energia jest cichej, wewnętrzna.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">🌒 Sierp rosnący</strong><br>Budowanie pędu. Pierwsze działania w kierunku celów z nówiu. Czas odwagi i ruchu do przodu.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">🌓 Pierwsza kwadra</strong><br>Pojawia się opór i wyzwania. To test — czy Twoje intencje są wystarczająco silne? Czas decyzji.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">🌔 Garb rosnący</strong><br>Dopracowywanie, korekta kursu. Widać już wyniki działań, ale trzeba je jeszcze ulepszyć.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">🌕 Pełnia</strong><br>Kulminacja. Emocje sięgają szczytu. To, co zaczęłeś w nów, teraz przynosi efekty — dobre lub złe. Czas świętowania lub konfrontacji z prawdą.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">🌖 Garb malejący</strong><br>Wdzięczność i dzielenie się. Czas dawania innym tego, czego się nauczyłeś.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">🌗 Ostatnia kwadra</strong><br>Puszczanie. Czas uwolnienia tego, co już nie służy. Sprzątanie fizyczne i emocjonalne.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">🌘 Sierp malejący (Balsamic Moon)</strong><br>Odpoczynek, introspekcja. Przed kolejnym nówiem — cisza i regeneracja. Medytacja, sen, refleksja.</p>`
     },
     {
@@ -756,19 +694,19 @@ const staticArticles = [
         excerpt: 'Od Głupca wyruszającego w nieznane, przez Śmierć oznaczającą transformację, po Świat symbolizujący spełnienie — każda karta Wielkiej Arkany to archetyp głęboko zakorzeniony w zbiorowej nieświadomości.',
         date: '3 kwietnia 2025',
         body: `<p>Talia tarota składa się z 78 kart podzielonych na <strong style="color:var(--gold)">Wielką Arkanę</strong> (22 karty) i Małą Arkanę (56 kart). Wielka Arkana to serce tarota — każda karta reprezentuje archetyp, doświadczenie lub siłę, z którą każdy człowiek spotyka się na swojej drodze życia.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">0 — Głupiec</strong>: Nowy początek, nieskażona niewinność, gotowość do skoku w nieznane. To my wszyscy na starcie każdej podróży.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">I — Mag</strong>: Wola, manifest, zdolność przekształcania myśli w rzeczywistość. "As above, so below."</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">II — Kapłanka</strong>: Intuicja, tajemnica, wiedza ukryta. To, czego nie można wyrazić słowami.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">XIII — Śmierć</strong>: Wbrew pozorom — nie oznacza fizycznej śmierci. To transformacja, koniec jednego rozdziału i konieczność puszczenia starego.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">XV — Diabeł</strong>: Zniewolenie, uzależnienie, iluzja braku wyboru. Ale kajdany na kartce są luźne — zawsze możemy je zdjąć.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">XXI — Świat</strong>: Spełnienie, integracja, zakończenie cyklu. Tancerka w wieńcu symbolizuje harmonię osiągniętą po przebyciu całej drogi od Głupca.</p>
- 
+
 <p style="margin-top:16px;">Tarot nie przepowiada przyszłości w sposób deterministyczny. To lustro — narzędzie refleksji, które pomaga zobaczyć sytuację z innej perspektywy. Każda karta to zaproszenie do rozmowy ze swoim wnętrzem.</p>`
     },
     {
@@ -778,15 +716,15 @@ const staticArticles = [
         excerpt: '12 znaków zodiaku dzieli się na 4 żywioły po 3 znaki każdy. Żywioł, do którego należysz, wiele mówi o Twojej energii, sposobie myślenia i reagowania na świat.',
         date: '20 marca 2025',
         body: `<p>Jednym z fundamentów astrologii jest podział 12 znaków zodiaku na <strong style="color:var(--gold)">cztery żywioły</strong>. Każdy żywioł skupia 3 znaki i opisuje pewien wspólny sposób przeżywania i działania w świecie.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">🔥 Ogień — Baran, Lew, Strzelec</strong><br>Energia, entuzjazm, impulsywność i inspiracja. Znaki ognia działają intuicyjnie, szybko się rozpalają — zarówno z pasją, jak i gniewem. Mają naturalny dar przywódczy i zdolność motywowania innych. Cień żywiołu: niecierpliwość i egocentryzm.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">🌍 Ziemia — Byk, Panna, Koziorożec</strong><br>Praktyczność, stabilność, cierpliwość i materializm (w dobrym sensie — zdolność do budowania). Znaki ziemi są wiarygodne, metodyczne i przyziemne. Cień żywiołu: sztywność i opór przed zmianą.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">💨 Powietrze — Bliźnięta, Waga, Wodnik</strong><br>Intelekt, komunikacja, społeczność i idee. Znaki powietrza żyją w świecie myśli i relacji. Są ciekawskie, obiektywne i lubią dyskusję. Cień żywiołu: oderwanie od emocji i niezdecydowanie.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">💧 Woda — Rak, Skorpion, Ryby</strong><br>Emocje, intuicja, wrażliwość i głębia. Znaki wody czują intensywnie i mają wyjątkową empatię. Są połączone z nieświadomością i sferą duchową. Cień żywiołu: nadmierna emocjonalność i wycofanie.</p>
- 
+
 <p style="margin-top:16px;">Warto pamiętać, że każdy z nas ma w swoim horoskopie wszystkie cztery żywioły — w różnym nasileniu. Dominujący żywioł to jednak często klucz do zrozumienia własnych wzorców zachowania.</p>`
     },
     {
@@ -796,29 +734,29 @@ const staticArticles = [
         excerpt: 'Nów Księżyca to astrologiczny Nowy Rok w miniaturze. Co dwa i pół tygodnia masz szansę na świeży start. Oto prosta, ale skuteczna praktyka ustawiania intencji.',
         date: '8 marca 2025',
         body: `<p>Nów Księżyca — moment, gdy Księżyc i Słońce są w tej samej części nieba — symbolizuje w astrologii nowy początek. To czas ciemności przed świtem, ciszy przed burzą. I właśnie ta cisza jest potężna.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">Dlaczego warto pracować z nówiem?</strong><br>Rytm Księżyca to jeden z najstarszych naturalnych kalendarzy ludzkości. Synchronizowanie się z nim to sposób na wyjście z chaosu i wprowadzenie intencjonalności do codziennego życia. Nie wymaga wiary w magię — wystarczy refleksja i skupienie.</p>
- 
+
 <p style="margin-top:16px;"><strong style="color:var(--gold)">Prosty rytuał nówiu (15-20 minut):</strong></p>
- 
+
 <p style="margin-top:12px;"><strong>1. Stwórz przestrzeń.</strong> Wycisz telefon. Zapal świecę lub kadzidło. Usiądź w spokojnym miejscu.</p>
- 
+
 <p style="margin-top:10px;"><strong>2. Oddech i wyciszenie.</strong> Weź 5 głębokich oddechów. Pozwól myślom opaść jak pył po burzy.</p>
- 
+
 <p style="margin-top:10px;"><strong>3. Zapisz 3 intencje.</strong> Nie życzenia — intencje. Różnica jest subtelna, ale ważna. Życzenie: "chcę więcej pieniędzy". Intencja: "buduję relację z finansami opartą na świadomości i wdzięczności". Pisz w czasie teraźniejszym, pozytywnie.</p>
- 
+
 <p style="margin-top:10px;"><strong>4. Jedno działanie.</strong> Przy każdej intencji zapisz jeden konkretny krok, który zrobisz w ciągu najbliższych 24 godzin. Intencja bez działania to tylko marzenie.</p>
- 
+
 <p style="margin-top:10px;"><strong>5. Zamknij rytuał.</strong> Podziękuj — sobie, naturze, czemukolwiek, w co wierzysz. Wydech. Koniec.</p>
- 
+
 <p style="margin-top:16px;">Wróć do tych zapisków przy pełni (ok. 2 tygodnie później) i sprawdź, co się wydarzyło. To może Cię zaskoczyć.</p>`
     }
 ];
- 
+
 function loadBlog() {
     renderBlogArticles();
 }
- 
+
 function renderBlogArticles() {
     const saved = getSavedArticles();
     const all = [...saved, ...staticArticles];
@@ -837,7 +775,7 @@ function renderBlogArticles() {
         </div>
     `).join('');
 }
- 
+
 function openBlogArticle(id) {
     const saved = getSavedArticles();
     const all = [...saved, ...staticArticles];
@@ -849,18 +787,18 @@ function openBlogArticle(id) {
     document.getElementById('blog-modal').style.display = 'block';
     document.getElementById('blog-modal').scrollTop = 0;
 }
- 
+
 function getSavedArticles() {
     try { return JSON.parse(localStorage.getItem('savedBlogArticles') || '[]'); }
     catch { return []; }
 }
- 
+
 function saveGeneratedArticle() {
     const title = document.getElementById('generated-article-title').textContent;
     const body  = document.getElementById('generated-article-body').innerHTML;
     const date  = document.getElementById('generated-article-date').textContent;
     if (!title) return;
- 
+
     const saved = getSavedArticles();
     const newArt = {
         id: 'saved_' + Date.now(),
@@ -872,19 +810,19 @@ function saveGeneratedArticle() {
     saved.unshift(newArt);
     localStorage.setItem('savedBlogArticles', JSON.stringify(saved));
     renderBlogArticles();
- 
+
     const btn = document.querySelector('[onclick="saveGeneratedArticle()"]');
     btn.textContent = '✓ ZAPISANO';
     btn.style.background = '#4a8c4a';
     setTimeout(() => { btn.textContent = '📌 ZAPISZ ARTYKUŁ'; btn.style.background = ''; }, 2000);
 }
- 
+
 // ============================================================
 // --- GEMINI AI HELPER ---
 // ============================================================
 
 const GROQ_URL = '/api/groq';
- 
+
 async function callGemini(prompt) {
     try {
         const response = await fetch(GROQ_URL, {
@@ -909,17 +847,17 @@ async function callGemini(prompt) {
         throw new Error('Brak połączenia z AI: ' + e.message);
     }
 }
- 
+
 async function generateBlogArticle() {
     const topic = document.getElementById('blog-topic-input').value.trim();
     if (!topic) {
         alert('Wpisz temat artykułu ✨');
         return;
     }
- 
+
     document.getElementById('blog-generating').style.display = 'block';
     document.getElementById('blog-generated-article').style.display = 'none';
- 
+
     try {
         const prompt = `Napisz po polsku artykuł blogowy o tematyce astrologicznej/ezoterycznej na temat: "${topic}".
                     
@@ -929,44 +867,44 @@ Artykuł powinien mieć:
 - Praktyczne porady lub ciekawostki
 - Przyjazny, ale ekspercki ton
 - Ok. 400-500 słów
- 
+
 Format odpowiedzi:
 TYTUŁ: [tytuł artykułu]
- 
+
 [treść artykułu — każdy paragraf oddzielony pustą linią, ważne terminy możesz otoczyć znacznikami <strong>]`;
- 
+
         const text = await callGemini(prompt);
         const lines = text.split('\n');
         let title = topic;
         let bodyLines = lines;
- 
+
         if (lines[0].startsWith('TYTUŁ:')) {
             title = lines[0].replace('TYTUŁ:', '').trim();
             bodyLines = lines.slice(2);
         }
- 
+
         const bodyHTML = bodyLines
             .filter(l => l.trim())
             .map(l => `<p style="margin-top:16px;">${l}</p>`)
             .join('');
- 
+
         const now = new Date();
         const dateStr = now.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
- 
+
         document.getElementById('generated-article-title').textContent = title;
         document.getElementById('generated-article-body').innerHTML = bodyHTML;
         document.getElementById('generated-article-date').textContent = '✦ AI · ' + dateStr;
         document.getElementById('blog-generating').style.display = 'none';
         document.getElementById('blog-generated-article').style.display = 'block';
         document.getElementById('blog-generated-article').scrollIntoView({ behavior: 'smooth', block: 'start' });
- 
+
     } catch (err) {
         document.getElementById('blog-generating').style.display = 'none';
         alert('Błąd generowania artykułu. Spróbuj ponownie.');
         console.error(err);
     }
 }
- 
+
 // ============================================================
 // --- 14. FORMULARZ KONTAKTOWY ---
 // ============================================================
@@ -974,7 +912,7 @@ function sendContactForm() {
     const name = document.getElementById('contact-name').value.trim();
     const email = document.getElementById('contact-email').value.trim();
     const message = document.getElementById('contact-message').value.trim();
- 
+
     if (!name || !email || !message) {
         alert('Uzupełnij wszystkie pola ✨');
         return;
@@ -983,14 +921,13 @@ function sendContactForm() {
         alert('Podaj poprawny adres e-mail.');
         return;
     }
- 
-    // Przekierowanie na Facebook
+
     document.getElementById('contact-confirmation').style.display = 'block';
     setTimeout(() => {
         window.open('https://www.facebook.com/profile.php?id=61589331091991', '_blank');
     }, 1000);
 }
- 
+
 // ============================================================
 // --- 15. SENNIK KOSMICZNY ---
 // ============================================================
@@ -1000,16 +937,16 @@ async function interpretDream() {
         alert('Opisz swój sen ✨');
         return;
     }
- 
+
     document.getElementById('dream-generating').style.display = 'block';
     document.getElementById('dream-result').style.display = 'none';
- 
+
     try {
         const dreamPrompt = `Jesteś mistycznym interpretatorem snów łączącym psychologię Junga, astrologię i symbolikę ezoteryczną.
                     
 Zinterpretuj poniższy sen po polsku w sposób głęboki, poetycki i pomocny:
 "${dream}"
- 
+
 Odpowiedz TYLKO w formacie JSON (bez żadnego innego tekstu, bez znaczników backtick):
 {
   "symbol": "[jeden emoji symbolizujący główny motyw snu]",
@@ -1020,11 +957,11 @@ Odpowiedz TYLKO w formacie JSON (bez żadnego innego tekstu, bez znaczników bac
   "przeslanie": "[praktyczna rada lub przesłanie dla śniącego, 2-3 zdania]",
   "afirmacja": "[krótka, inspirująca afirmacja związana ze snem]"
 }`;
- 
+
         const rawText = await callGemini(dreamPrompt);
         const clean = rawText.replace(/```json|```/g, '').trim();
         const parsed = JSON.parse(clean);
- 
+
         document.getElementById('dream-symbol').textContent = parsed.symbol || '🌙';
         document.getElementById('dream-title').textContent = parsed.tytul || 'Interpretacja snu';
         document.getElementById('dream-body').innerHTML = `
@@ -1048,31 +985,30 @@ Odpowiedz TYLKO w formacie JSON (bez żadnego innego tekstu, bez znaczników bac
                 <p style="font-family:'Cinzel',serif;color:var(--gold);font-size:0.9rem;font-style:italic;letter-spacing:0.04em;">"${parsed.afirmacja}"</p>
             </div>
         `;
- 
+
         document.getElementById('dream-generating').style.display = 'none';
         document.getElementById('dream-result').style.display = 'block';
         document.getElementById('dream-result').scrollIntoView({ behavior: 'smooth', block: 'start' });
- 
-        // Store current dream data for saving
+
         document.getElementById('dream-result').dataset.dreamText = dream;
         document.getElementById('dream-result').dataset.dreamData = JSON.stringify(parsed);
- 
+
     } catch (err) {
         document.getElementById('dream-generating').style.display = 'none';
         alert('Błąd interpretacji snu. Spróbuj ponownie.');
         console.error(err);
     }
 }
- 
+
 function saveDream() {
     const dreamText = document.getElementById('dream-result').dataset.dreamText;
     const parsed = JSON.parse(document.getElementById('dream-result').dataset.dreamData || '{}');
     if (!dreamText) return;
- 
+
     const saved = JSON.parse(localStorage.getItem('savedDreams') || '[]');
     const now = new Date();
     const dateStr = now.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
- 
+
     saved.unshift({
         id: 'dream_' + Date.now(),
         date: dateStr,
@@ -1082,22 +1018,22 @@ function saveDream() {
         meaning: parsed.znaczenie,
         affirmation: parsed.afirmacja
     });
- 
+
     if (saved.length > 20) saved.pop();
     localStorage.setItem('savedDreams', JSON.stringify(saved));
     renderDreamHistory();
- 
+
     const btn = document.querySelector('[onclick="saveDream()"]');
     btn.textContent = '✓ ZAPISANO';
     btn.style.background = '#4a8c4a';
     setTimeout(() => { btn.textContent = '📌 ZAPISZ INTERPRETACJĘ'; btn.style.background = ''; }, 2000);
 }
- 
+
 function renderDreamHistory() {
     const saved = JSON.parse(localStorage.getItem('savedDreams') || '[]');
     const container = document.getElementById('dream-history');
     if (!saved.length) { container.innerHTML = ''; return; }
- 
+
     container.innerHTML = `
         <p class="gold-label" style="margin-bottom:16px;text-align:center;">📜 ZAPISANE SNY</p>
         ${saved.map(d => `
@@ -1115,8 +1051,8 @@ function renderDreamHistory() {
         <button onclick="clearDreams()" style="background:none;border:none;color:rgba(255,255,255,0.2);cursor:pointer;font-size:0.75rem;width:100%;text-align:center;margin-top:5px;">🗑 Wyczyść historię snów</button>
     `;
 }
- 
-function clearDreams() {localStorage.removeItem('savedDreams');
+
+function clearDreams() {
+    localStorage.removeItem('savedDreams');
     renderDreamHistory();
 }
- 

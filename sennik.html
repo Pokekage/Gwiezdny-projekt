@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horoskop Dzienny, Tarot i Fazy Księżyca – Gwiezdny Przewodnik</title>
-    <meta name="description" content="Codzienny horoskop dla 12 znaków zodiaku, karta tarota dnia, kalkulator faz księżyca, zgodność znaków i sennik. Polska platforma astrologiczna.">
+    <title>Sennik Kosmiczny — Interpretacja Snów Online | Gwiezdny Przewodnik</title>
+    <meta name="description" content="Opisz swój sen i poznaj jego symboliczne znaczenie w świetle astrologii, psychologii Junga i tradycyjnej symboliki snów.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://gwiezdnyprzewodnik.pl/index.html">
+    <link rel="canonical" href="https://gwiezdnyprzewodnik.pl/sennik.html">
     <link rel="icon" type="image/png" href="gwiezdny_przewodnik_icon_v2.png">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,66 +38,54 @@
         }
         
     </style>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Gwiezdny Przewodnik — Horoskopy, Tarot i Fazy Księżyca","url":"https://gwiezdnyprzewodnik.pl/index.html","inLanguage":"pl"}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Sennik Kosmiczny","url":"https://gwiezdnyprzewodnik.pl/sennik.html","inLanguage":"pl"}</script>
 </head>
 <body>
     <header class="site-header">
         <p class="site-tagline">Codzienna astrologia dla wszystkich 12 znaków zodiaku. Horoskopy, kalkulator faz Księżyca, karty Tarota i interpretacja snów.</p>
     </header>
     <nav class="mystic-nav">
-        <a href="index.html" class="nav-btn active">✨ Horoskop</a>
+        <a href="index.html" class="nav-btn">✨ Horoskop</a>
         <a href="ksiega-smakow.html" class="nav-btn">🔮 Przepisy</a>
         <a href="fazy-ksiezyca.html" class="nav-btn">🌙 Lunacja</a>
         <a href="tarot-dnia.html" class="nav-btn">🃏 Tarot</a>
         <a href="zgodnosc-znakow.html" class="nav-btn">💫 Zgodność</a>
         <a href="dziennik-kosmiczny.html" class="nav-btn">📖 Dziennik</a>
         <a href="wiedza-astrologiczna.html" class="nav-btn">✍️ Wiedza</a>
-        <a href="sennik.html" class="nav-btn">💤 Sennik</a>
+        <a href="sennik.html" class="nav-btn active">💤 Sennik</a>
         <a href="kamienie-mineraly.html" class="nav-btn">💎 Kamienie</a>
         <a href="o-nas.html" class="nav-btn">🌟 O nas</a>
         <a href="kontakt.html" class="nav-btn">✉️ Kontakt</a>
     </nav>
     <main>
-    <section id="horoscope-tab" class="tab-content active">
-        <h1 style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:nowrap;"><span style="flex-shrink:0;">✨</span><span style="white-space:nowrap;">GWIEZDNY PRZEWODNIK</span><span style="flex-shrink:0;">✨</span></h1>
-
+    <section id="sennik-tab" class="tab-content active">
+        <h1>🌙 SENNIK KOSMICZNY 🌙</h1>
         <div class="static-intro">
-            <p>Witaj w Gwiezdnym Przewodniku — polskiej platformie astrologicznej, która każdego dnia dostarcza Ci horoskop dopasowany do Twojego znaku zodiaku. Odkryj, co gwiazdy mówią o Twoich relacjach, karierze, zdrowiu i życiu duchowym.</p>
+            <p>Sny od wieków były uważane za bramy do nieświadomości i kosmicznych przekazów. Sennik Kosmiczny łączy tradycyjną symbolikę snów z astrologiczną interpretacją archetypów. Opisz swój sen, a gwiazdy pomogą Ci odkryć jego ukryte znaczenie.</p>
+        </div>
+        <p style="color:rgba(255,255,255,0.5);margin-bottom:30px;font-style:italic;text-align:center;">Odkryj symboliczne znaczenie swoich snów w świetle gwiazd i archetypów.</p>
+        <div class="blog-generator-box">
+            <p class="gold-label" style="margin-bottom:12px;text-align:center;">🔮 CO CI SIĘ ŚNIŁO? 🔮</p>
+            <p style="text-align:center;font-size:0.85rem;color:rgba(255,255,255,0.45);margin-bottom:18px;">Opisz swój sen — osobę, miejsce, emocję, symbol lub wydarzenie.</p>
+            <div style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+                <textarea id="dream-input" class="journal-textarea" style="max-width:500px;min-height:100px;" placeholder="np. śniły mi się latające konie, byłam w ciemnym lesie, ktoś mi coś dawał..."></textarea>
+                <button class="action-btn" onclick="interpretDream()">INTERPRETUJ SEN ✦</button>
+            </div>
+            <div id="dream-generating" style="display:none;text-align:center;margin-top:20px;color:var(--gold);font-family:'Cinzel',serif;font-size:0.85rem;">✦ &nbsp; Gwiazdy odczytują Twój sen... &nbsp; ✦</div>
         </div>
 
-        <h2 style="font-family:'Cinzel',serif;color:var(--gold);text-align:center;margin:10px 0 16px;font-size:1.1rem;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap;"><span style="flex-shrink:0;">✨</span><span>Wybierz swój znak, aby poznać horoskop na dziś</span><span style="flex-shrink:0;">✨</span></h2>
-        <div class="zodiac-grid" id="zodiac-grid"></div>
-        <div id="horoscope-display" class="result-panel" style="margin-left:auto;margin-right:auto;max-width:100%;width:100%;box-sizing:border-box;">
-            <h2 id="selected-sign">Znak</h2>
-            <p id="horoscope-text"></p>
-            <div id="daily-dish-hint" class="hint-box"></div>
+        <div id="dream-result" style="display:none;" class="blog-article-full">
+            <div style="text-align:center;margin-bottom:20px;">
+                <div id="dream-symbol" style="font-size:3rem;margin-bottom:10px;"></div>
+                <h2 id="dream-title" style="font-family:'Cinzel',serif;color:var(--gold);font-size:1.3rem;"></h2>
+            </div>
+            <div id="dream-body" style="color:rgba(255,255,255,0.88);line-height:1.9;font-size:1rem;"></div>
+            <div style="margin-top:25px;padding-top:20px;border-top:1px solid rgba(212,175,55,0.2);text-align:center;">
+                <button class="action-btn" style="font-size:0.8rem;padding:10px 20px;" onclick="saveDream()">📌 ZAPISZ INTERPRETACJĘ</button>
+            </div>
         </div>
 
-        <div style="width:100%;max-width:1100px;margin:20px auto;text-align:center;">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6047762879323596" data-ad-slot="9480738535" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
-
-        <h2 style="font-family:'Cinzel',serif;color:var(--gold);text-align:center;margin:30px 0 16px;font-size:1rem;opacity:0.7;letter-spacing:0.08em;">WSZYSTKIE ZNAKI ZODIAKU</h2>
-        <div class="zodiac-static-grid">
-            <div class="zodiac-static-item"><strong>♈ Baran</strong><span>21.03 – 19.04</span><em>Żywioł: Ogień · Planeta: Mars</em></div>
-            <div class="zodiac-static-item"><strong>♉ Byk</strong><span>20.04 – 20.05</span><em>Żywioł: Ziemia · Planeta: Wenus</em></div>
-            <div class="zodiac-static-item"><strong>♊ Bliźnięta</strong><span>21.05 – 20.06</span><em>Żywioł: Powietrze · Planeta: Merkury</em></div>
-            <div class="zodiac-static-item"><strong>♋ Rak</strong><span>21.06 – 22.07</span><em>Żywioł: Woda · Planeta: Księżyc</em></div>
-            <div class="zodiac-static-item"><strong>♌ Lew</strong><span>23.07 – 22.08</span><em>Żywioł: Ogień · Planeta: Słońce</em></div>
-            <div class="zodiac-static-item"><strong>♍ Panna</strong><span>23.08 – 22.09</span><em>Żywioł: Ziemia · Planeta: Merkury</em></div>
-            <div class="zodiac-static-item"><strong>♎ Waga</strong><span>23.09 – 22.10</span><em>Żywioł: Powietrze · Planeta: Wenus</em></div>
-            <div class="zodiac-static-item"><strong>♏ Skorpion</strong><span>23.10 – 21.11</span><em>Żywioł: Woda · Planeta: Pluton</em></div>
-            <div class="zodiac-static-item"><strong>♐ Strzelec</strong><span>22.11 – 21.12</span><em>Żywioł: Ogień · Planeta: Jowisz</em></div>
-            <div class="zodiac-static-item"><strong>♑ Koziorożec</strong><span>22.12 – 19.01</span><em>Żywioł: Ziemia · Planeta: Saturn</em></div>
-            <div class="zodiac-static-item"><strong>♒ Wodnik</strong><span>20.01 – 18.02</span><em>Żywioł: Powietrze · Planeta: Uran</em></div>
-            <div class="zodiac-static-item"><strong>♓ Ryby</strong><span>19.02 – 20.03</span><em>Żywioł: Woda · Planeta: Neptun</em></div>
-        </div>
-
-        <div style="width:100%;max-width:1100px;margin:20px auto;text-align:center;">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6047762879323596" data-ad-slot="9480738535" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
+        <div id="dream-history" style="width:100%;max-width:720px;margin-top:10px;"></div>
     </section>
     </main>
     <div style="width:100%;max-width:1100px;margin:0 auto 20px;padding:0 20px;">

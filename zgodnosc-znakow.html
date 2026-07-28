@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horoskop Dzienny, Tarot i Fazy Księżyca – Gwiezdny Przewodnik</title>
-    <meta name="description" content="Codzienny horoskop dla 12 znaków zodiaku, karta tarota dnia, kalkulator faz księżyca, zgodność znaków i sennik. Polska platforma astrologiczna.">
+    <title>Zgodność Znaków Zodiaku — Kalkulator Kompatybilności | Gwiezdny Przewodnik</title>
+    <meta name="description" content="Sprawdź procentową zgodność dowolnych dwóch znaków zodiaku. Poznaj mocne strony i wyzwania Waszej relacji według astrologii.">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://gwiezdnyprzewodnik.pl/index.html">
+    <link rel="canonical" href="https://gwiezdnyprzewodnik.pl/zgodnosc-znakow.html">
     <link rel="icon" type="image/png" href="gwiezdny_przewodnik_icon_v2.png">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,18 +38,18 @@
         }
         
     </style>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Gwiezdny Przewodnik — Horoskopy, Tarot i Fazy Księżyca","url":"https://gwiezdnyprzewodnik.pl/index.html","inLanguage":"pl"}</script>
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Zgodność Znaków","url":"https://gwiezdnyprzewodnik.pl/zgodnosc-znakow.html","inLanguage":"pl"}</script>
 </head>
 <body>
     <header class="site-header">
         <p class="site-tagline">Codzienna astrologia dla wszystkich 12 znaków zodiaku. Horoskopy, kalkulator faz Księżyca, karty Tarota i interpretacja snów.</p>
     </header>
     <nav class="mystic-nav">
-        <a href="index.html" class="nav-btn active">✨ Horoskop</a>
+        <a href="index.html" class="nav-btn">✨ Horoskop</a>
         <a href="ksiega-smakow.html" class="nav-btn">🔮 Przepisy</a>
         <a href="fazy-ksiezyca.html" class="nav-btn">🌙 Lunacja</a>
         <a href="tarot-dnia.html" class="nav-btn">🃏 Tarot</a>
-        <a href="zgodnosc-znakow.html" class="nav-btn">💫 Zgodność</a>
+        <a href="zgodnosc-znakow.html" class="nav-btn active">💫 Zgodność</a>
         <a href="dziennik-kosmiczny.html" class="nav-btn">📖 Dziennik</a>
         <a href="wiedza-astrologiczna.html" class="nav-btn">✍️ Wiedza</a>
         <a href="sennik.html" class="nav-btn">💤 Sennik</a>
@@ -58,42 +58,34 @@
         <a href="kontakt.html" class="nav-btn">✉️ Kontakt</a>
     </nav>
     <main>
-    <section id="horoscope-tab" class="tab-content active">
-        <h1 style="display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:nowrap;"><span style="flex-shrink:0;">✨</span><span style="white-space:nowrap;">GWIEZDNY PRZEWODNIK</span><span style="flex-shrink:0;">✨</span></h1>
-
-        <div class="static-intro">
-            <p>Witaj w Gwiezdnym Przewodniku — polskiej platformie astrologicznej, która każdego dnia dostarcza Ci horoskop dopasowany do Twojego znaku zodiaku. Odkryj, co gwiazdy mówią o Twoich relacjach, karierze, zdrowiu i życiu duchowym.</p>
+    <section id="compat-tab" class="tab-content active">
+        <h1>💫 ZGODNOŚĆ ZNAKÓW 💫</h1>
+        <p style="color:rgba(255,255,255,0.5);margin-bottom:30px;font-style:italic;">Sprawdź, co gwiazdy mówią o Waszej relacji.</p>
+        <div class="compat-box">
+            <div class="compat-selects">
+                <div class="compat-select-wrap">
+                    <label class="gold-label" for="compat-sign1">Pierwszy znak</label>
+                    <select id="compat-sign1" class="mystic-input">
+                        <option value="">— wybierz —</option>
+                        <option value="0">♈ Baran</option><option value="1">♉ Byk</option><option value="2">♊ Bliźnięta</option><option value="3">♋ Rak</option><option value="4">♌ Lew</option><option value="5">♍ Panna</option><option value="6">♎ Waga</option><option value="7">♏ Skorpion</option><option value="8">♐ Strzelec</option><option value="9">♑ Koziorożec</option><option value="10">♒ Wodnik</option><option value="11">♓ Ryby</option>
+                    </select>
+                </div>
+                <div class="compat-heart">💞</div>
+                <div class="compat-select-wrap">
+                    <label class="gold-label" for="compat-sign2">Drugi znak</label>
+                    <select id="compat-sign2" class="mystic-input">
+                        <option value="">— wybierz —</option>
+                        <option value="0">♈ Baran</option><option value="1">♉ Byk</option><option value="2">♊ Bliźnięta</option><option value="3">♋ Rak</option><option value="4">♌ Lew</option><option value="5">♍ Panna</option><option value="6">♎ Waga</option><option value="7">♏ Skorpion</option><option value="8">♐ Strzelec</option><option value="9">♑ Koziorożec</option><option value="10">♒ Wodnik</option><option value="11">♓ Ryby</option>
+                    </select>
+                </div>
+            </div>
+            <button class="action-btn" onclick="calculateCompatibility()">OBLICZ ZGODNOŚĆ ✨</button>
         </div>
-
-        <h2 style="font-family:'Cinzel',serif;color:var(--gold);text-align:center;margin:10px 0 16px;font-size:1.1rem;display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:nowrap;"><span style="flex-shrink:0;">✨</span><span>Wybierz swój znak, aby poznać horoskop na dziś</span><span style="flex-shrink:0;">✨</span></h2>
-        <div class="zodiac-grid" id="zodiac-grid"></div>
-        <div id="horoscope-display" class="result-panel" style="margin-left:auto;margin-right:auto;max-width:100%;width:100%;box-sizing:border-box;">
-            <h2 id="selected-sign">Znak</h2>
-            <p id="horoscope-text"></p>
-            <div id="daily-dish-hint" class="hint-box"></div>
+        <div id="compat-result" class="result-panel" style="max-width:500px;">
+            <div id="compat-score" style="font-size:2.8rem;font-family:'Cinzel',serif;color:var(--gold);margin-bottom:15px;"></div>
+            <div class="compat-bar-wrap"><div id="compat-bar-fill" class="compat-bar-fill"></div></div>
+            <p id="compat-comment" style="margin-top:20px;line-height:1.8;font-style:italic;"></p>
         </div>
-
-        <div style="width:100%;max-width:1100px;margin:20px auto;text-align:center;">
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6047762879323596" data-ad-slot="9480738535" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-        </div>
-
-        <h2 style="font-family:'Cinzel',serif;color:var(--gold);text-align:center;margin:30px 0 16px;font-size:1rem;opacity:0.7;letter-spacing:0.08em;">WSZYSTKIE ZNAKI ZODIAKU</h2>
-        <div class="zodiac-static-grid">
-            <div class="zodiac-static-item"><strong>♈ Baran</strong><span>21.03 – 19.04</span><em>Żywioł: Ogień · Planeta: Mars</em></div>
-            <div class="zodiac-static-item"><strong>♉ Byk</strong><span>20.04 – 20.05</span><em>Żywioł: Ziemia · Planeta: Wenus</em></div>
-            <div class="zodiac-static-item"><strong>♊ Bliźnięta</strong><span>21.05 – 20.06</span><em>Żywioł: Powietrze · Planeta: Merkury</em></div>
-            <div class="zodiac-static-item"><strong>♋ Rak</strong><span>21.06 – 22.07</span><em>Żywioł: Woda · Planeta: Księżyc</em></div>
-            <div class="zodiac-static-item"><strong>♌ Lew</strong><span>23.07 – 22.08</span><em>Żywioł: Ogień · Planeta: Słońce</em></div>
-            <div class="zodiac-static-item"><strong>♍ Panna</strong><span>23.08 – 22.09</span><em>Żywioł: Ziemia · Planeta: Merkury</em></div>
-            <div class="zodiac-static-item"><strong>♎ Waga</strong><span>23.09 – 22.10</span><em>Żywioł: Powietrze · Planeta: Wenus</em></div>
-            <div class="zodiac-static-item"><strong>♏ Skorpion</strong><span>23.10 – 21.11</span><em>Żywioł: Woda · Planeta: Pluton</em></div>
-            <div class="zodiac-static-item"><strong>♐ Strzelec</strong><span>22.11 – 21.12</span><em>Żywioł: Ogień · Planeta: Jowisz</em></div>
-            <div class="zodiac-static-item"><strong>♑ Koziorożec</strong><span>22.12 – 19.01</span><em>Żywioł: Ziemia · Planeta: Saturn</em></div>
-            <div class="zodiac-static-item"><strong>♒ Wodnik</strong><span>20.01 – 18.02</span><em>Żywioł: Powietrze · Planeta: Uran</em></div>
-            <div class="zodiac-static-item"><strong>♓ Ryby</strong><span>19.02 – 20.03</span><em>Żywioł: Woda · Planeta: Neptun</em></div>
-        </div>
-
         <div style="width:100%;max-width:1100px;margin:20px auto;text-align:center;">
             <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6047762879323596" data-ad-slot="9480738535" data-ad-format="auto" data-full-width-responsive="true"></ins>
             <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
