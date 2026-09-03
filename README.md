@@ -1,8 +1,38 @@
-# Gwiezdny Przewodnik
+# 🔮 Gwiezdny Przewodnik
 
-Statyczna strona astrologiczna (PL): horoskop dzienny, tarot dnia, fazy Księżyca, zgodność znaków, sennik, kamienie i minerały, dziennik kosmiczny oraz artykuły o astrologii. Zbudowana w czystym HTML/CSS/JS, hostowana na Netlify, monetyzowana przez Google AdSense.
+![Deploy](https://img.shields.io/badge/deploy-netlify-00C7B7?logo=netlify&logoColor=white)
+![License](https://img.shields.io/badge/license-All%20Rights%20Reserved-lightgrey)
+![Stack](https://img.shields.io/badge/stack-HTML%20%2F%20CSS%20%2F%20JS-d4af37)
 
-🔗 Produkcja: https://gwiezdnyprzewodnik.pl
+**🔗 Live: [gwiezdnyprzewodnik.pl](https://gwiezdnyprzewodnik.pl)** · 📱 [Aplikacja na Google Play](https://play.google.com/store/apps/details?id=com.Pokekage.gwiezdnyprzewodnik)
+
+Polska platforma astrologiczna: horoskop dzienny, tarot dnia, fazy Księżyca, zgodność znaków, sennik, kamienie i minerały, dziennik kosmiczny oraz artykuły o astrologii. Własny projekt (nie zlecenie) — od pomysłu, przez frontend, backend serverless, integrację AI, po monetyzację i zgodność z RODO.
+
+## O projekcie
+
+Cel: darmowe, przyjemne wizualnie narzędzie astrologiczne, które samo się utrzymuje z reklam, bez konieczności płatnego backendu czy bazy danych. Stąd wybór: statyczny frontend + Netlify Functions jako lekki serverless proxy tam, gdzie trzeba ukryć klucz API.
+
+## Funkcje
+
+- **Horoskop dzienny** dla 12 znaków zodiaku, generowany przez AI
+- **Tarot dnia** — losowana karta z interpretacją
+- **Kalkulator faz Księżyca** — na dowolną datę, w tym lunację urodzin
+- **Zgodność znaków** — kalkulator kompatybilności dwóch znaków
+- **Sennik** — interpretacja snów przez AI
+- **Kamienie i minerały** przypisane do znaków zodiaku
+- **Księga smaków** — przepisy kulinarne pod znak zodiaku
+- **Dziennik kosmiczny** — prywatne notatki użytkownika (zapis wyłącznie lokalnie, `localStorage`, bez wysyłania na serwer)
+- **Generator artykułów blogowych** o astrologii/ezoteryce (AI na żądanie użytkownika)
+
+## Integracja AI
+
+Treści generowane na żywo (horoskop, sennik, artykuły) idą przez `netlify/functions/groq.js` — lekką funkcję serverless, która przekazuje zapytanie do [Groq API](https://groq.com/) (model `llama-3.3-70b-versatile`). Klucz API trzymany jest w zmiennej środowiskowej Netlify i nigdy nie trafia do przeglądarki — frontend woła własny endpoint `/api/groq`, nie Groq bezpośrednio.
+
+## Reklamy i zgodność z RODO
+
+- Google AdSense (`ca-pub-6047762879323596`), jednostki reklamowe rozmieszczone na wszystkich stronach z treścią (patrz `ads.txt`).
+- **Baner zgody na cookies (`consent.js`)** — reklama nie ładuje się, dopóki użytkownik nie wybierze reklam spersonalizowanych albo tylko niezbędnych (`requestNonPersonalizedAds = 1`), zgodnie z [wytycznymi Google dla wydawców z ruchem z EOG/UK](https://support.google.com/adsense/answer/9007336). Wybór zapamiętywany w `localStorage`.
+- Polityka prywatności i regulamin opisują podstawę prawną (RODO), zakres danych i rolę Google AdSense/Analytics jako podmiotów trzecich.
 
 ## Struktura projektu
 
@@ -58,3 +88,7 @@ Repozytorium jest podpięte pod Netlify — push do gałęzi głównej wdraża z
 ## Licencja
 
 Zobacz [LICENSE](./LICENSE) — wszystkie prawa zastrzeżone.
+
+## Autor
+
+**[LinkedIn](https://www.linkedin.com/in/dj99/)**
