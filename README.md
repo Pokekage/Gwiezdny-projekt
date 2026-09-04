@@ -53,6 +53,8 @@ Treści generowane na żywo (horoskop, sennik, artykuły) idą przez `netlify/fu
 ├── script.js                      # Logika interfejsu i obliczeń
 ├── consent.js                     # Baner zgody na cookies reklamowe (AdSense)
 ├── ads.txt                        # Autoryzacja sprzedawców reklam (Google AdSense)
+├── sitemap.xml                    # Mapa strony dla robotów wyszukiwarek
+├── robots.txt                     # Reguły indeksowania (wskazuje na sitemap.xml)
 ├── netlify.toml                   # Konfiguracja przekierowań Netlify (/api/* → functions)
 └── netlify/functions/groq.js      # Funkcja serverless (Netlify Functions, API Groq)
 ```
